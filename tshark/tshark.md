@@ -16,9 +16,9 @@ Step 3: Use tshark to capture PCAPs <br>
  
 * Username `apnic` and password `training`.
 
-Login to the server (SSH using the username and password given above), where **XX** is the jumphost number and **Y** is the group number:
+Login to the server (SSH using the username and password given above), where **Y** is the group number:
 
-	ssh -J apnic@202.125.97.XX apnic@192.168.30.Y
+	ssh  apnic@192.168.30.Y
 	
 NOTE: Type `yes` if asked about wanting to continue connecting
 
