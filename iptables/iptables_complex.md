@@ -157,7 +157,7 @@ sudo netfilter-persistent save
 sudo netfilter-persistent reload
 ```
 
-Issue the following command to flash all rules for the next exercise
+Issue the following command to remove all rules for the next exercise
 
 ```bash
 sudo iptables -F
