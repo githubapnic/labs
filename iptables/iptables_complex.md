@@ -232,29 +232,6 @@ There is also an advanced syntax, which allows you to define interface, manage e
 | `sudo ufw app update CUPS`                    | Flushes firewall rules, related to CUPS application profile           |
 
 
-| Command                     | Description                                                           |
-|-----------------------------|-----------------------------------------------------------------------|
-|`sudo ufw deny in on eth0` | drop all incoming packets on eth0 interface. |
-|`sudo ufw allow out on eth0 to any port 25 proto tcp` | allow all outgoing traffic on eth0 interface, to any address, at port 25 with protocol tcp. <br> **NOTE** To define protocol in complex rule, you should append the word `proto` and space. <br> So, instead of **25/tcp**, you should write **25 proto tcp**.|
-|`sudo ufw insert 1 allow 80` | places “allow all traffic on port 80” rule at first place in rule set. |
-|`sudo ufw delete 1` | removes rule number 1 from rules list. |
-|`sudo ufw show user-rules` | displays user-defined rule set. <br>
-***user-defined rule set***<br>
-raw – for displaying of all sets<br>
-builtins – for internal rule set<br>
-before-rules – for rules appended before main rule set<br>
-user-rules – for rules defined by user <br>
-after-rules – for rules appended after main rule set <br>
-logging-rules – for rules with logging enabled <br>
-listening – for displaying listening tcp and open udp ports |
-|`sudo ufw delete deny out 8080` | removes rule “deny all outbound traffic on port 8080” from the rule set |
-|`sudo ufw allow log 80/tcp` | allows all traffic on tcp port 80, logging new connections only |
-|`sudo ufw allow log-all 80/tcp` | allows all traffic on tcp port 80, logging all connections <br> **NOTE** Always place log command between allowance mode and port.|
-|`sudo ufw logging off` | turns off logging. Can be also low, medium, high and full. Defaults to low. <br> **NOTE** Higher logging modes generate more logging information, which can overload your disk with time (especially on busy or overloaded system). |
-|`sudo ufw app list` | display application profiles list |
-| `sudo ufw app info CUPS`    | Display detailed profile for program named CUPS                       |
-| `sudo ufw allow 631 app CUPS` | Adds “allow all traffic on port 631” to CUPS application profile     |
-| `sudo ufw app update CUPS`  | Flushes firewall rules, related to CUPS application profile           |
 
 **NOTE** Profiles are generally used by software, essentially for remote management. 
 
@@ -364,8 +341,6 @@ Now, we'll convert some iptables rules to UFW rules as an exercise to implement 
    ```
    - The first command sets up tracking for new connections to TCP port 22.
    - The second command updates the tracking and sets a rate limit of 6 new connections per 30 seconds, dropping new connections that exceed this rate. 
-
-This way, you can customize the rate limit to better suit your particular needs or environment.
 
 **Note**: The limit of 6 connections per 30 seconds is a default setting in UFW when you use the `limit` command. This specific rate was chosen as a reasonable default to help mitigate brute force attacks while minimizing the chance of blocking legitimate traffic. It represents a balance between security and usability.
 
