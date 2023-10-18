@@ -13,6 +13,7 @@ Step 2: Review filter policy <br>
 Step 3: Build packet filtering rules to restrict access to certain applications depending on the target audience <br>
 Step 4: Confirm the rules are working <br>
 Step 5: Learn how to permanently save the iptables rules <br>
+Step 6: Learn about the Uncomplicated Firewall (UFW)
 
 **Login Details**
  
@@ -97,7 +98,19 @@ You should see the rules you have created. If you'd rather see numeric output, d
 ```bash
 sudo iptables -L -n
 ```
-Now, let's test to make sure that the rules are working. Check that you can connect to services on localhost (if you have not installed Apache, do so now):
+Start a simple web server to listen for connections on port 80
+```bash
+sudo nohup python3 -m http.server 80 &
+```
+
+| Component     | Explanation                                                                                         |
+|---------------|-----------------------------------------------------------------------------------------------------|
+| `sudo`        | Runs the following command with superuser privileges.                                               |
+| `nohup`       | Allows the process to keep running even after the terminal is closed.                               |
+| `python3 -m http.server 80` | The command to start the HTTP server on port 80.                                         |
+| `&`           | Indicates to the shell that the command should be run in the background.                            |
+
+Let's test to make sure that the rules are working. Check that you can connect to services on localhost:
 ```bash
 telnet localhost 80
 ```
@@ -109,21 +122,33 @@ Connected to localhost.
 Escape character is '^]'.
 To exit, type 'Ctrl-]', and then 'quit'
 ```
-Now, ask the members of your group to check connectivity against your web server:
+Test connectivity against your web server:
 ```plaintext
-apnic@group2:~$ telnet group1 80
+telnet 192.168.30.XX 80
 ```
 They should be able to connect. Now, ask someone from ANOTHER group, to test:
 ```plaintext
-telnet group1 8080
+telnet 192.168.30.XX 8080
 ```
 (If they are able to connect, then you did something wrong. Go back to your file, fix the rules, and run the sh command again).
 
+Stop the backgrounded HTTP server:
+```bash
+pgrep -f "python3 -m http.server" | sudo xargs kill -9
+```
+
+| Component     | Explanation                                                                                         |
+|---------------|-----------------------------------------------------------------------------------------------------|
+| `pgrep -f "python3 -m http.server"` | Finds and prints the PID of the process running the command `python3 -m http.server`. |
+| `|`           | The pipe operator sends the output of the previous command (the PID) to the next command.            |
+| `sudo xargs kill -9` | `xargs` reads the PID from the output of `pgrep` and passes it as an argument to the `kill` command, which stops the process. `sudo` is used to run the command with superuser privileges, and `-9` is the signal for a forceful termination. |
+
+
 Now, test the ICMP rate limiting. Ask one of your classmates to do the following against your pc:
 ```bash
-sudo ping -f group1
+sudo ping -f 192.168.30.XX
 ```
-What is that `-f`? It stands for “flood”, which means that pc2 will try to send as many ICMP echo request packets as possible. Ask your classmate to run that for about 5 seconds, and then stop with Ctrl-C. Then, ask them to check the statistics. There should be a high “packet loss” value, and the number of packets received should not be greater than 3 per second (15 packets total if they ran it for 5 secs)
+What is that `-f`? It stands for “flood”, it will try to send as many ICMP echo request packets as possible. Ask your neighbour to run that for about 5 seconds, and then stop with Ctrl-C. Then, ask them to check the statistics. There should be a high “packet loss” value, and the number of packets received should not be greater than 3 per second (15 packets total if they ran it for 5 secs)
 
 If all the tests look good, you could save those rules in order to have Linux re-apply them when it reboots:
 ```bash
