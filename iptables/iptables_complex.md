@@ -30,11 +30,11 @@ Password = `training`
 You can check if iptables is installed in your system by doing:
 
 ```bash
-$ sudo iptables -V
+sudo iptables -V
 ```
 If it is not installed:
 ```bash
-$ sudo apt-get install iptables
+sudo apt-get install iptables
 ```
 
 ## Filtering policy
@@ -48,7 +48,7 @@ $ sudo apt-get install iptables
 
 For that, we are going to create a text file, which will help us build the ruleset more easily. Make sure to replace “X” with your group number when necessary:
 ```bash
-$ nano /home/apnic/iptables.sh
+nano /home/apnic/iptables.sh
 ```
 Type the following information into the text editor:
 
