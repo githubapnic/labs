@@ -118,7 +118,7 @@ Password = `training`
 | `--ctstate NEW,ESTABLISHED`| Connection State| The rule applies to new connections (`NEW`) and already established connections (`ESTABLISHED`).                  |
 | `-j ACCEPT`                | Jump Target    | Specifies the action to take if the packet matches the rule. In this case, `ACCEPT` allows the packet to continue|
 
-** Hint: ** This rule allows incoming TCP traffic from the IP range 192.168.30.0/24 to port 22 (typically used for SSH) on the local machine, for both new and established connections. This is useful for managing SSH access to your system from a specific network range, which can be a part of network security and access control strategies.
+**Hint: ** This rule allows incoming TCP traffic from the IP range 192.168.30.0/24 to port 22 (typically used for SSH) on the local machine, for both new and established connections. This is useful for managing SSH access to your system from a specific network range, which can be a part of network security and access control strategies.
 
 For further information refer to:
 
