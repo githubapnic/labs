@@ -29,7 +29,9 @@ Password = `training`
 
 1. Download the latest version of iptables.
 
+	```
 	sudo apt update && sudo apt install -y iptables
+	```
 			
 2. Try to ping **127.0.0.1**
 
