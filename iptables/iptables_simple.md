@@ -35,12 +35,16 @@ Password = `training`
 			
 2. Try to ping **127.0.0.1**
 
+	```
 	ping -c 2 127.0.0.1
-   
+   	```
+ 
 3. Add a rule to drop (block) icmp traffic from the ip address of 127.0.0.1
 
+	```
 	sudo iptables -A INPUT -s 127.0.0.1 -p icmp -j DROP
-
+	```
+ 
 | Option         | Command        | Description                                                                                                   |
 |----------------|----------------|---------------------------------------------------------------------------------------------------------------|
 | `-A INPUT`     | Append Rule    | Appends a new rule to the `INPUT` chain, which processes packets entering the system.                         |
@@ -51,30 +55,42 @@ Password = `training`
 
 5. Try to ping **127.0.0.1**
 
+	```
 	ping -c 2 127.0.0.1
-   
+   	```
+ 
 6. Review the rules in the iptables list.
 
+	```
 	sudo iptables -L --line-numbers
-
+	```
+ 
 7. Delete the rule that is dropping icmp.
 
+	```
 	sudo iptables -D INPUT 1
-   
+	```
+    
 8. Try to ping **127.0.0.1**
 
+	```
 	ping -c 2 127.0.0.1
-
+	```
+ 
 9. If the machine reboots, the rules will be deleted. To ensure the rules remain after a reboot, extra software is needed.
 
+	```
 	sudo apt-get install -y iptables-persistent netfilter-persistent
 	sudo netfilter-persistent save
 	sudo netfilter-persistent reload
-
+	```
+ 
 10. The following rule will block all IPv6 traffic trying to connect to Secure SHell (SSH)
 
-	sudo ip6tables -t filter -A INPUT -p tcp -s ::/0 --dport 22 -j DROP
-
+	```
+ 	sudo ip6tables -t filter -A INPUT -p tcp -s ::/0 --dport 22 -j DROP
+	```
+ 
 | Option        | Command           | Description                                                                                                         |
 |---------------|-------------------|---------------------------------------------------------------------------------------------------------------------|
 | `-t filter`   | Table Selection   | Specifies the table to which the rule should be added. In this case, it's the `filter` table.                       |
@@ -87,8 +103,10 @@ Password = `training`
 
 12. The following rule will allow IPv4 traffic from 192.168.30.0/24 network to connect to Secure SHell (SSH)
 
-	sudo iptables -t filter -A INPUT -p tcp -s 192.168.30.0/24 --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-
+	```
+ 	sudo iptables -t filter -A INPUT -p tcp -s 192.168.30.0/24 --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+	```
+ 
 | Option                     | Command        | Description                                                                                                       |
 |----------------------------|----------------|-------------------------------------------------------------------------------------------------------------------|
 | `-t filter`                | Table Selection| Specifies the table to which the rule should be added. In this case, it's the `filter` table.                     |
