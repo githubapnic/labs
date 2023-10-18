@@ -334,5 +334,32 @@ Now, we'll convert some iptables rules to UFW rules as an exercise to implement 
   sudo ufw allow in 25/tcp
   ```
 
+- **Example 3**:
+  Convert the following UFW command to an iptables command:
+   ```bash
+   sudo ufw limit 22/tcp
+   ```
+  iptables equivalent:
+   ```bash
+   sudo iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set
+   sudo iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --seconds 30 --hitcount 6 -j DROP
+   ```
+   - The first command sets up tracking for new connections to TCP port 22.
+   - The second command updates the tracking and sets a rate limit of 6 new connections per 30 seconds, dropping new connections that exceed this rate. 
+
+This way, you can customize the rate limit to better suit your particular needs or environment.
+
+**Note**: The limit of 6 connections per 30 seconds is a default setting in UFW when you use the `limit` command. This specific rate was chosen as a reasonable default to help mitigate brute force attacks while minimizing the chance of blocking legitimate traffic. It represents a balance between security and usability.
+
+UFW's `limit` command is a simplified interface to iptables' `recent` module, which tracks the recent connections from an IP address. The `limit` command in UFW is hard-coded to create a rule that allows no more than 6 new connections per 30 seconds from a single IP address. 
+
+If you need a different rate limit, you would need to use iptables directly or other firewall management tools that provide more granular control over rate limiting settings.
+
+
+For further information refer to: <br>
+
+* [UFW Documentation](https://help.ubuntu.com/community/UFW)
+* [How To Set Up a Firewall with UFW on Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-18-04)
+
 					
 ***END OF EXERCISE***
