@@ -10,8 +10,9 @@ Knowledge of Ubuntu, linux commands, and network protocols.
 ## Lab Tasks
 Step 1: Update or install iptables software<br>
 Step 2: Review filter policy <br>
-Step 3: Create iptable rule <br>
-Step 4: Confirm ping is blocked <br>
+Step 3: Build packet filtering rules to restrict access to certain applications depending on the target audience <br>
+Step 4: Confirm the rules are working <br>
+Step 5: Learn how to permanently save the iptables rules <br>
 
 **Login Details**
  
@@ -24,12 +25,6 @@ Login to the server (SSH using the username and password given above), where **X
 NOTE: Type `yes` if asked about wanting to continue connecting
 
 Password = `training`
-
-## Goals
-- Install iptables
-- Understand basic iptables commands
-- Build packet filtering rules to restrict access to certain applications depending on the target audience
-- Learn how to permanently save the iptables rules
 
 ## Part 1: Installation (We do not have to do this step)
 You can check if iptables is installed in your system by doing:
@@ -130,4 +125,21 @@ sudo ping -f group1
 ```
 What is that `-f`? It stands for “flood”, which means that pc2 will try to send as many ICMP echo request packets as possible. Ask your classmate to run that for about 5 seconds, and then stop with Ctrl-C. Then, ask them to check the statistics. There should be a high “packet loss” value, and the number of packets received should not be greater than 3 per second (15 packets total if they ran it for 5 secs)
 
-If all the tests look good, then you should save those rules in order to have Linux re-apply them when it reboots:
+If all the tests look good, you could save those rules in order to have Linux re-apply them when it reboots:
+```bash
+sudo apt-get install -y iptables-persistent netfilter-persistent
+sudo netfilter-persistent save
+sudo netfilter-persistent reload
+```
+
+Issue the following command to flash all rules for the next exercise
+
+```bash
+sudo iptables -F
+```
+
+For further information refer to:
+
+* [https://gist.github.com/jirutka/3742890](https://gist.github.com/jirutka/3742890)
+					
+***END OF EXERCISE***
