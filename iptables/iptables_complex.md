@@ -154,6 +154,8 @@ UFW, or Uncomplicated Firewall, is a user-friendly front-end for managing iptabl
 - **Application Profiles**: Users can create profiles for different applications, making it easy to manage firewall rules for specific applications.
 - **Logging**: UFW provides built-in logging to monitor and analyze traffic, which is a feature that can be customized to meet the user's needs.
 
+To work with ufw, you need to have administrative permissions. So, we append word sudo – stands for super user do(es) – so that command like `ufw status` turns into `sudo ufw status`. If you don’t do this, you’ll get the message **ERROR: You need to be root to run this script**. <br>
+
 ### Basic Commands:
 - **Installing UFW**:
   ```bash
@@ -177,7 +179,15 @@ UFW, or Uncomplicated Firewall, is a user-friendly front-end for managing iptabl
 - **Checking help information**:
   ```bash
   sudo ufw -help
-  ```  
+  ```
+
+### Service commands
+| Command       | Description                                    |
+|---------------|------------------------------------------------|
+| `sudo ufw status` | Displays status of Uncomplicated Firewall.  |
+| `sudo ufw enable` | Turns firewall on.                           |
+| `sudo ufw disable`| Turns firewall off.                          |
+| `sudo ufw reload` | Applies rules to firewall.                   |  
 
 ### Comparison with iptables:
 - **Ease of Use**: UFW is designed to be much easier to use than iptables, especially for those who are not familiar with firewall configurations. The syntax is simpler, and common tasks require fewer commands.
@@ -186,78 +196,143 @@ UFW, or Uncomplicated Firewall, is a user-friendly front-end for managing iptabl
 - **Application Profiles**: The application profile feature of UFW can be a significant advantage when managing firewall rules for specific applications.
 
 
-
-To work with ufw, you need to have administrative permissions. So, we append word sudo – stands for super user do(es) – so that command like `ufw status` turns into `sudo ufw status`. If you don’t do this, you’ll get the message **ERROR: You need to be root to run this script**.
-
-Service commands
-sudo ufw status – displays status of uncomplicated firewall. 
-sudo ufw enable – turns firewall on. 
-sudo ufw disable – turns firewall off. 
-sudo ufw reload – applies rules to firewall.
-
-Syntax
+### Syntax
 Syntax for ufw rules is as follows: ufw allow|deny|reject|limit in|out port/protocol
 
-Where
-Allow – accepts packets
-Deny – drops packets
-Reject – refuses packets
-Limit – moderates packets
-In – sets direction to incoming packets
-Out – sets direction to outgoing packets
-Port – defines target port. It can be: Numeric as 80 or Service name as http (see Services file) List as 80,110 (separated by comma, no space allowed) Range 8000:8080 (all ports from 8000 to 8080) Note! If you define list of ports, you can define maximum 15 items per rule. Range considered as 2 items.
-Protocol – can be any, tcp or udp, depending on what you’re planning to filter.
 
-Advanced syntax
-This is also an advanced syntax, which allows you to define interface, manage entries in rule set, configure logging or define custom behavior for specific applications. For example: sudo ufw deny in on eth0 – drop all incoming packets on eth0 interface. 
-sudo ufw allow out on eth0 to any port 25 proto tcp – allow all outgoing traffic on eth0 interface, to any address, at port 25 with protocol tcp.
+| Keyword | Description |
+|---------|-------------|
+| Allow   | Accepts packets |
+| Deny    | Drops packets |
+| Reject  | Refuses packets |
+| Limit   | Moderates packets |
+| In      | Sets direction to incoming packets |
+| Out     | Sets direction to outgoing packets |
+| Port    | Defines target port. It can be: <br> - Numeric as 80 or Service name as http (see Services file) <br> - List as 80,110 (separated by comma, no space allowed) <br> - Range 8000:8080 (all ports from 8000 to 8080) <br> Note! If you define a list of ports, you can define a maximum of 15 items per rule. A range is considered as 2 items. |
+| Protocol | Can be any, tcp, or udp, depending on what you’re planning to filter. |
 
-NOTE To define protocol in complex rule, you should use append word proto and space. So, instead of 25/tcp, you should write 25 proto tcp.
-sudo ufw insert 1 allow 80 – places “allow all traffic on port 80” rule at first place in rule set.
-sudo ufw delete 1 – removes rule number 1 from rules list. 
-sudo ufw show user-rules – displays user-defined rule set.
 
-Can be also
-raw – for displaying of all sets
-builtins – for internal rule set
-before-rules – for rules appended before main rule set
-user-rules – for rules defined by user (you)
-after-rules – for rules appended after main rule set
-logging-rules – for rules with logging enabled
-listening – for displaying listening tcp and open udp ports
-sudo ufw delete deny out 8080 – removes rule “deny all outbound traffic on port 8080” from the rule set \\  sudo ufw allow log 80/tcp – allows all traffic on tcp port 80, logging new connections only
-sudo ufw allow log-all 80/tcp – allows all traffic on tcp port 80, logging all connections
-NOTE Always place log command between allowance mode and port.
-sudo ufw logging off – turns off logging. Can be also low, medium, high and full. Defaults to low.
+###Advanced syntax
+There is also an advanced syntax, which allows you to define interface, manage entries in rule set, configure logging or define custom behavior for specific applications. For example: 
 
-NOTE Higher logging modes generate more logging information, which can overload your disk with time (especially on busy or overloaded system).
-sudo ufw app list – display application profiles list
- sudo ufw app info CUPS – display detailed profile for program named CUPS
-sudo ufw allow 631 app CUPS – adds “allow all traffic on port 631” to CUPS application profile 
-sudo ufw app update CUPS – flushes firewall rules, related to CUPS application profile
-NOTE Profiles are generally used by software, essentially for remote management.
-Default policy
-Ufw is based on principle – check against all rules, and if no rule is applicable, follow default policy. This is common principle of iptables firewall, which sometimes causing confusion for new users. For example, computer receives incoming packet from remote host for port 80. There is no rule defining what to do with incoming packets for port 80, so computer follows default policy.
+| Command                     | Description                                                           |
+|-----------------------------|-----------------------------------------------------------------------|
+|`sudo ufw deny in on eth0` | drop all incoming packets on eth0 interface. |
+|`sudo ufw allow out on eth0 to any port 25 proto tcp` | allow all outgoing traffic on eth0 interface, to any address, at port 25 with protocol tcp. <br> **NOTE** To define protocol in complex rule, you should append the word `proto` and space. <br> So, instead of **25/tcp**, you should write **25 proto tcp**.|
+|`sudo ufw insert 1 allow 80` | places “allow all traffic on port 80” rule at first place in rule set. |
+|`sudo ufw delete 1` | removes rule number 1 from rules list. |
+|`sudo ufw show user-rules` | displays user-defined rule set. <br>
+***user-defined rule set***<br>
+raw – for displaying of all sets<br>
+builtins – for internal rule set<br>
+before-rules – for rules appended before main rule set<br>
+user-rules – for rules defined by user <br>
+after-rules – for rules appended after main rule set <br>
+logging-rules – for rules with logging enabled <br>
+listening – for displaying listening tcp and open udp ports |
+|`sudo ufw delete deny out 8080` | removes rule “deny all outbound traffic on port 8080” from the rule set |
+|`sudo ufw allow log 80/tcp` | allows all traffic on tcp port 80, logging new connections only |
+|`sudo ufw allow log-all 80/tcp` | allows all traffic on tcp port 80, logging all connections <br> **NOTE** Always place log command between allowance mode and port.|
+|`sudo ufw logging off` | turns off logging. Can be also low, medium, high and full. Defaults to low. <br> **NOTE** Higher logging modes generate more logging information, which can overload your disk with time (especially on busy or overloaded system). |
+|`sudo ufw app list` | display application profiles list |
+| `sudo ufw app info CUPS`    | Display detailed profile for program named CUPS                       |
+| `sudo ufw allow 631 app CUPS` | Adds “allow all traffic on port 631” to CUPS application profile     |
+| `sudo ufw app update CUPS`  | Flushes firewall rules, related to CUPS application profile           |
+**NOTE** Profiles are generally used by software, essentially for remote management. 
+
+### Default policy
+Ufw is based on principle – check against all rules, and if no rule is applicable, follow default policy. This is common principle of iptables firewall, which sometimes causes confusion for new users. For example, computer receives incoming packet from remote host for port 80. There is no rule defining what to do with incoming packets for port 80, so computer follows default policy.
 
 Policies, by default, are set to deny for incoming and accept for outgoing, which seems reasonable enough.
 
-See, there are few cases when we need to allow inbound connections, so, naturally, it’s easier to define “what to allow”, instead of defining everything denied. Same applies for outbound connections, since all networking application need remote access. In rare case, when you would like to change default policy, you can issue one of the following commands:
-sudo ufw default allow incoming – sets default policy to “allow inbound packets”
-sudo ufw default reject outgoing – sets default policy to “refuse outbound packets”
+But, there are few cases when we need to allow inbound connections, so, naturally, it’s easier to define “what to allow”, instead of defining everything denied. Same applies for outbound connections, since all networking application need remote access. In rare case, when you would like to change default policy, you can issue one of the following commands:
+| Command                               | Description                                 |
+|---------------------------------------|---------------------------------------------|
+| `sudo ufw default allow incoming`     | Sets default policy to "allow inbound packets" |
+| `sudo ufw default reject outgoing`    | Sets default policy to "refuse outbound packets" |
 
-Exercise these Rules for testing
-NOTE Adding new rules require firewall to be running, or changes will be lost. To do this, type in sudo ufw enable.
-sudo ufw allow 22 – permits all traffic on port 22
-sudo ufw deny 110 – drops all traffic on port 110
-sudo ufw reject http – refuses (notifying the other side) all traffic on http service port (which is 80)
-sudo ufw allow in 21 – allows all incoming traffic on port 21
-sudo ufw deny out 8080 – denies all outgoing traffic on port 8080
-sudo ufw allow from 123.45.67.89 – allows any traffic coming from 123.45.67.89
-sudo ufw limit 22/tcp – drops all connections on tcp port 22, if there were over 6 connections to this port with-in last 30 seconds
-sudo ufw reset – clears all rules (equivalent to iptables –F command that we used
-Now we like to implement our own ruleset with UFW that we used in iptables exercise. For example convert this command to the following:
-iptables -A INPUT -i lo -j ACCEPT convert it to sudo ufw allow in on lo
-Or
-iptables -A INPUT -p tcp –dport 25 -j ACCEPT to sudo ufw allow in 25/tcp
+
+### UFW Rules Exercise
+
+This exercise is designed to help you get acquainted with UFW (Uncomplicated Firewall) rules. Please follow the steps below to test various rules and understand their effects.
+
+**Pre-Requisites** <br>
+Ensure that the firewall is running before adding new rules, otherwise, the changes will be lost. To enable UFW, run the following command:
+```bash
+sudo ufw enable
+```
+
+1. **Allow Traffic on Port 22**:
+   - This rule permits all traffic on port 22.
+   ```bash
+   sudo ufw allow 22
+   ```
+
+2. **Deny Traffic on Port 110**:
+   - This rule drops all traffic on port 110.
+   ```bash
+   sudo ufw deny 110
+   ```
+
+3. **Reject HTTP Traffic**:
+   - This rule refuses all traffic on HTTP service port (which is 80), notifying the other side of the rejection.
+   ```bash
+   sudo ufw reject http
+   ```
+
+4. **Allow Incoming Traffic on Port 21**:
+   - This rule allows all incoming traffic on port 21.
+   ```bash
+   sudo ufw allow in 21
+   ```
+
+5. **Deny Outgoing Traffic on Port 8080**:
+   - This rule denies all outgoing traffic on port 8080.
+   ```bash
+   sudo ufw deny out 8080
+   ```
+
+6. **Allow Traffic from a Specific IP Address**:
+   - This rule allows any traffic coming from 123.45.67.89.
+   ```bash
+   sudo ufw allow from 123.45.67.89
+   ```
+
+7. **Limit Connections on Port 22**:
+   - This rule drops all connections on TCP port 22 if there were over 6 connections to this port within the last 30 seconds.
+   ```bash
+   sudo ufw limit 22/tcp
+   ```
+
+8. **Reset All Rules**:
+   - This command clears all rules, similar to the `iptables -F` command.
+   ```bash
+   sudo ufw reset
+   ```
+
+### Implementing Custom Ruleset
+
+Now, we'll convert some iptables rules to UFW rules as an exercise to implement our own ruleset.
+
+- **Example 1**:
+  Convert the following iptables command to a UFW command:
+  ```bash
+  iptables -A INPUT -i lo -j ACCEPT
+  ```
+  UFW equivalent:
+  ```bash
+  sudo ufw allow in on lo
+  ```
+
+- **Example 2**:
+  Convert the following iptables command to a UFW command:
+  ```bash
+  iptables -A INPUT -p tcp --dport 25 -j ACCEPT
+  ```
+  UFW equivalent:
+  ```bash
+  sudo ufw allow in 25/tcp
+  ```
+
 					
 ***END OF EXERCISE***
