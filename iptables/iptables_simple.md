@@ -25,13 +25,6 @@ NOTE: Type `yes` if asked about wanting to continue connecting
 
 Password = `training`
 
-<style>
-code {
-  white-space : pre-wrap !important;
-  word-break : break-word;
-}
-</style>
-
 ### Part 1. Installation and rule creation
 
 1. Download the latest version of iptables.
