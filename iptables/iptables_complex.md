@@ -212,8 +212,25 @@ Syntax for ufw rules is as follows: ufw allow|deny|reject|limit in|out port/prot
 | Protocol | Can be any, tcp, or udp, depending on what you’re planning to filter. |
 
 
-###Advanced syntax
+### Advanced syntax
 There is also an advanced syntax, which allows you to define interface, manage entries in rule set, configure logging or define custom behavior for specific applications. For example: 
+
+| Command                                       | Description                                                           |
+|-----------------------------------------------|-----------------------------------------------------------------------|
+| `sudo ufw deny in on eth0`                    | Drop all incoming packets on eth0 interface.                          |
+| `sudo ufw allow out on eth0 to any port 25 proto tcp` | Allow all outgoing traffic on eth0 interface, to any address, at port 25 with protocol tcp. <br> **NOTE**: To define protocol in complex rule, you should append the word `proto` and space. <br> So, instead of **25/tcp**, you should write **25 proto tcp**. |
+| `sudo ufw insert 1 allow 80`                  | Places “allow all traffic on port 80” rule at the first place in rule set. |
+| `sudo ufw delete 1`                           | Removes rule number 1 from rules list.                                |
+| `sudo ufw show user-rules`                    | Displays user-defined rule set. <br> ***User-defined rule set***<br> raw – for displaying of all sets<br> builtins – for internal rule set<br> before-rules – for rules appended before main rule set<br> user-rules – for rules defined by user <br> after-rules – for rules appended after main rule set <br> logging-rules – for rules with logging enabled <br> listening – for displaying listening TCP and open UDP ports |
+| `sudo ufw delete deny out 8080`               | Removes rule “deny all outbound traffic on port 8080” from the rule set |
+| `sudo ufw allow log 80/tcp`                   | Allows all traffic on TCP port 80, logging new connections only        |
+| `sudo ufw allow log-all 80/tcp`               | Allows all traffic on TCP port 80, logging all connections <br> **NOTE**: Always place log command between allowance mode and port. |
+| `sudo ufw logging off`                        | Turns off logging. Can also be low, medium, high, and full. Defaults to low. <br> **NOTE**: Higher logging modes generate more logging information, which can overload your disk with time (especially on busy or overloaded system). |
+| `sudo ufw app list`                           | Display application profiles list                                      |
+| `sudo ufw app info CUPS`                      | Display detailed profile for program named CUPS                        |
+| `sudo ufw allow 631 app CUPS`                 | Adds “allow all traffic on port 631” to CUPS application profile      |
+| `sudo ufw app update CUPS`                    | Flushes firewall rules, related to CUPS application profile           |
+
 
 | Command                     | Description                                                           |
 |-----------------------------|-----------------------------------------------------------------------|
@@ -238,6 +255,7 @@ listening – for displaying listening tcp and open udp ports |
 | `sudo ufw app info CUPS`    | Display detailed profile for program named CUPS                       |
 | `sudo ufw allow 631 app CUPS` | Adds “allow all traffic on port 631” to CUPS application profile     |
 | `sudo ufw app update CUPS`  | Flushes firewall rules, related to CUPS application profile           |
+
 **NOTE** Profiles are generally used by software, essentially for remote management. 
 
 ### Default policy
