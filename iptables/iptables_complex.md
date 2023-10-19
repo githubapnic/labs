@@ -389,8 +389,8 @@ Now, we'll convert some iptables rules to UFW rules as an exercise to implement 
   iptables -A INPUT -i lo -j ACCEPT
   ```
   
-  <details>
-    <summary>UFW equivalent</summary>
+<details>
+  <summary>UFW equivalent</summary>
   
     ```bash
     sudo ufw allow in on lo
@@ -403,7 +403,7 @@ Now, we'll convert some iptables rules to UFW rules as an exercise to implement 
   - `on lo`: This specifies that the rule applies to the loopback interface (`lo`).
 
   This command is typically used to ensure that the system can communicate with itself, which is necessary for certain system functions and for running locally-hosted services.
-  </details>  
+</details>  
 
 - **Example 2**:
   Convert the following iptables command to a UFW command:
@@ -411,7 +411,7 @@ Now, we'll convert some iptables rules to UFW rules as an exercise to implement 
   iptables -A INPUT -p tcp --dport 25 -j ACCEPT
   ```
 
-    <details>
+<details>
     <summary>UFW equivalent</summary>
   
     ```bash
@@ -425,14 +425,15 @@ Now, we'll convert some iptables rules to UFW rules as an exercise to implement 
   - `25/tcp`: This specifies that the rule applies to TCP traffic on port 25.
 
   TCP port 25 is traditionally used for Simple Mail Transfer Protocol (SMTP), which is utilised for email transmission. By executing this command, you are permitting incoming email traffic to the system, which is essential if you are running a mail server.
-  </details>  
+</details>  
 
 - **Example 3**:
   Convert the following UFW command to an iptables command:
    ```bash
    sudo ufw limit 22/tcp
    ```
-    <details>
+
+<details>
     <summary>iptables equivalent</summary>   
   
    ```bash
@@ -440,8 +441,9 @@ Now, we'll convert some iptables rules to UFW rules as an exercise to implement 
    sudo iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --seconds 30 --hitcount 6 -j DROP
    ```
    - The first command sets up tracking for new connections to TCP port 22.
-   - The second command updates the tracking and sets a rate limit of 6 new connections per 30 seconds, dropping new connections that exceed this rate. 
-  </details>  
+   - The second command updates the tracking and sets a rate limit of 6 new connections per 30 seconds, dropping new connections that exceed this rate.
+
+</details>  
   
 **Note**: The limit of 6 connections per 30 seconds is a default setting in UFW when you use the `limit` command. This specific rate was chosen as a reasonable default to help mitigate brute force attacks while minimizing the chance of blocking legitimate traffic. It represents a balance between security and usability.
 
