@@ -110,27 +110,32 @@ sudo nohup python3 -m http.server 80 &
 | `python3 -m http.server 80` | The command to start the HTTP server on port 80.                                         |
 | `&`           | Indicates to the shell that the command should be run in the background.                            |
 
+Install the telnet application to test the rules
+```bash
+sudo apt install -y telnet
+```
+
 Let's test to make sure that the rules are working. Check that you can connect to services on localhost:
 ```bash
 telnet localhost 80
 ```
 You should see something like this:
-```plaintext
-# telnet localhost 80
-Trying 127.0.0.1...
-Connected to localhost.
-Escape character is '^]'.
-To exit, type 'Ctrl-]', and then 'quit'
-```
+
+![](images/image01.png)
+
+To exit, type 'Ctrl-]', press enter and then type 'quit'
+
 Test connectivity against your web server:
 ```plaintext
 telnet 192.168.30.XX 80
 ```
-They should be able to connect. Now, ask someone from ANOTHER group, to test:
+It should be able to connect. Now, try to connect to a port that is not allowed such as port `8080`:
 ```plaintext
 telnet 192.168.30.XX 8080
 ```
 (If they are able to connect, then you did something wrong. Go back to your file, fix the rules, and run the sh command again).
+
+![](images/image03.png)
 
 Stop the backgrounded HTTP server:
 ```bash
@@ -144,11 +149,27 @@ pgrep -f "python3 -m http.server" | sudo xargs kill -9
 | `sudo xargs kill -9` | `xargs` reads the PID from the output of `pgrep` and passes it as an argument to the `kill` command, which stops the process. `sudo` is used to run the command with superuser privileges, and `-9` is the signal for a forceful termination. |
 
 
-Now, test the ICMP rate limiting. Ask one of your classmates to do the following against your pc:
+Now, test the ICMP rate limiting. Ask one of your neighbours to do a ping attack against your IP address.
 ```bash
 sudo ping -f 192.168.30.XX
 ```
 What is that `-f`? It stands for “flood”, it will try to send as many ICMP echo request packets as possible. Ask your neighbour to run that for about 5 seconds, and then stop with Ctrl-C. Then, ask them to check the statistics. There should be a high “packet loss” value, and the number of packets received should not be greater than 3 per second (15 packets total if they ran it for 5 secs)
+
+![](images/image04.png)
+
+Check the packet count that has matched the iptables rules:
+```bash
+ sudo iptables -vL -n
+```
+
+| Switch | Explanation                                                   |
+|--------|---------------------------------------------------------------|
+| `-v`   | Verbose output. Provides additional details.                  |
+| `-L`   | List rules. Displays all current rules in the selected chain. |
+| `-n`   | Numeric output. Shows IP addresses and port numbers numerically, instead of resolving to hostnames and service names. |
+
+![](images/image05.png)
+
 
 If all the tests look good, you could save those rules in order to have Linux re-apply them when it reboots:
 ```bash
