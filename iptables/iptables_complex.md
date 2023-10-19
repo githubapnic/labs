@@ -137,7 +137,7 @@ telnet 192.168.30.XX 8080
 
 ![](images/image03.png)
 
-Stop the backgrounded HTTP server:
+Stop the HTTP server that is running in the background:
 ```bash
 pgrep -f "python3 -m http.server" | sudo xargs kill -9
 ```
@@ -162,20 +162,35 @@ Check the packet count that has matched the iptables rules:
  sudo iptables -vL -n
 ```
 
+![](images/image05.png)
+
 | Switch | Explanation                                                   |
 |--------|---------------------------------------------------------------|
 | `-v`   | Verbose output. Provides additional details.                  |
 | `-L`   | List rules. Displays all current rules in the selected chain. |
 | `-n`   | Numeric output. Shows IP addresses and port numbers numerically, instead of resolving to hostnames and service names. |
 
-![](images/image05.png)
-
 
 If all the tests look good, you could save those rules in order to have Linux re-apply them when it reboots:
+Install the software for saving iptables
 ```bash
 sudo apt-get install -y iptables-persistent netfilter-persistent
+```
+
+Save the existing rules to a file and then reload the file.
+```bash
 sudo netfilter-persistent save
 sudo netfilter-persistent reload
+```
+
+To view the files that store the iptables rules
+```bash
+ls /etc/iptables
+```
+
+View the contents of the **rules.v4** file
+```bash
+sudo cat /etc/iptables/rules.v4
 ```
 
 Issue the following command to remove all rules for the next exercise
