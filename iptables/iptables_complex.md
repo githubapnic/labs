@@ -222,6 +222,10 @@ To work with ufw, you need to have administrative permissions. So, we append wor
   ```bash
   sudo apt install -y ufw
   ```
+- **Allowing SSH Traffic**:
+  ```bash
+  sudo ufw allow 22
+  ```
   
 - **Enabling/Disabling Firewall**:
   ```bash
@@ -313,9 +317,9 @@ But, there are few cases when we need to allow inbound connections, so, naturall
 This exercise is designed to help you get acquainted with UFW (Uncomplicated Firewall) rules. Please follow the steps below to test various rules and understand their effects.
 
 **Pre-Requisites** <br>
-Ensure that the firewall is running before adding new rules, otherwise, the changes will be lost. To enable UFW, run the following command:
+Confirm the status of UFW, by running the following command:
 ```bash
-sudo ufw enable
+sudo ufw status
 ```
 
 1. **Allow Traffic on Port 22**:
@@ -359,8 +363,17 @@ sudo ufw enable
    ```bash
    sudo ufw limit 22/tcp
    ```
+8. To enable UFW, run the following command:
+   ```bash
+   sudo ufw enable
+   ```
 
-8. **Reset All Rules**:
+9. To check the status of UFW, run the following command:
+   ```bash
+   sudo ufw status
+   ```      
+
+9. **Reset All Rules**:
    - This command clears all rules, similar to the `iptables -F` command.
    ```bash
    sudo ufw reset
@@ -379,6 +392,22 @@ Now, we'll convert some iptables rules to UFW rules as an exercise to implement 
   ```bash
   sudo ufw allow in on lo
   ```
+
+<details>
+  <summary>UFW equivalent</summary>
+  
+  ```bash
+  sudo ufw allow in on lo
+  ```
+The command `ufw allow in on lo` is used to configure UFW to allow all incoming traffic on the loopback interface (`lo`).
+
+- `ufw`: This is the command-line utility for managing the Uncomplicated Firewall.
+- `allow`: This tells UFW to allow the specified traffic.
+- `in`: This specifies that the rule applies to incoming traffic.
+- `on lo`: This specifies that the rule applies to the loopback interface (`lo`).
+
+This command is typically used to ensure that the system can communicate with itself, which is necessary for certain system functions and for running locally-hosted services.
+</details>  
 
 - **Example 2**:
   Convert the following iptables command to a UFW command:
