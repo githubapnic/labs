@@ -388,50 +388,61 @@ Now, we'll convert some iptables rules to UFW rules as an exercise to implement 
   ```bash
   iptables -A INPUT -i lo -j ACCEPT
   ```
-  UFW equivalent:
-  ```bash
-  sudo ufw allow in on lo
-  ```
-
-<details>
-  <summary>UFW equivalent</summary>
   
-  ```bash
-  sudo ufw allow in on lo
-  ```
-The command `ufw allow in on lo` is used to configure UFW to allow all incoming traffic on the loopback interface (`lo`).
+  <details>
+    <summary>UFW equivalent</summary>
+  
+    ```bash
+    sudo ufw allow in on lo
+    ```
+  The command `ufw allow in on lo` allows all incoming traffic on the loopback interface (`lo`).
 
-- `ufw`: This is the command-line utility for managing the Uncomplicated Firewall.
-- `allow`: This tells UFW to allow the specified traffic.
-- `in`: This specifies that the rule applies to incoming traffic.
-- `on lo`: This specifies that the rule applies to the loopback interface (`lo`).
+  - `ufw`: This is the command-line utility for managing the Uncomplicated Firewall.
+  - `allow`: This tells UFW to allow the specified traffic.
+  - `in`: This specifies that the rule applies to incoming traffic.
+  - `on lo`: This specifies that the rule applies to the loopback interface (`lo`).
 
-This command is typically used to ensure that the system can communicate with itself, which is necessary for certain system functions and for running locally-hosted services.
-</details>  
+  This command is typically used to ensure that the system can communicate with itself, which is necessary for certain system functions and for running locally-hosted services.
+  </details>  
 
 - **Example 2**:
   Convert the following iptables command to a UFW command:
   ```bash
   iptables -A INPUT -p tcp --dport 25 -j ACCEPT
   ```
-  UFW equivalent:
-  ```bash
-  sudo ufw allow in 25/tcp
-  ```
+
+    <details>
+    <summary>UFW equivalent</summary>
+  
+    ```bash
+    sudo ufw allow in 25/tcp
+    ```
+  The command `ufw allow in 25/tcp` allows incoming traffic on TCP port 25.
+
+  - `ufw`: This is the command-line utility for managing the Uncomplicated Firewall.
+  - `allow`: This tells UFW to allow the specified traffic.
+  - `in`: This specifies that the rule applies to incoming traffic.
+  - `25/tcp`: This specifies that the rule applies to TCP traffic on port 25.
+
+  TCP port 25 is traditionally used for Simple Mail Transfer Protocol (SMTP), which is utilised for email transmission. By executing this command, you are permitting incoming email traffic to the system, which is essential if you are running a mail server.
+  </details>  
 
 - **Example 3**:
   Convert the following UFW command to an iptables command:
    ```bash
    sudo ufw limit 22/tcp
    ```
-  iptables equivalent:
+    <details>
+    <summary>iptables equivalent</summary>   
+  
    ```bash
    sudo iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set
    sudo iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --seconds 30 --hitcount 6 -j DROP
    ```
    - The first command sets up tracking for new connections to TCP port 22.
    - The second command updates the tracking and sets a rate limit of 6 new connections per 30 seconds, dropping new connections that exceed this rate. 
-
+  </details>  
+  
 **Note**: The limit of 6 connections per 30 seconds is a default setting in UFW when you use the `limit` command. This specific rate was chosen as a reasonable default to help mitigate brute force attacks while minimizing the chance of blocking legitimate traffic. It represents a balance between security and usability.
 
 UFW's `limit` command is a simplified interface to iptables' `recent` module, which tracks the recent connections from an IP address. The `limit` command in UFW is hard-coded to create a rule that allows no more than 6 new connections per 30 seconds from a single IP address. 
