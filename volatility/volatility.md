@@ -217,7 +217,7 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 	ps aux | grep x7 
 	```
 
-    ![image00 ps aux.png](images/image00 ps aux.png)
+    ![image00 ps aux.png](images/image00%20ps$20aux.png)
 
     What is the process ID? 
     
@@ -231,7 +231,7 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 
     netstat shows a process named 'x7' PID with a listening port that of **31337**.
     
-    ![image01 netstat.png](images/image01 netstat.png)
+    ![image01 netstat.png](images/image01%20netstat.png)
 
 - [] When doing live forensics on Linux, /proc is your best friend! A lot of information related to running processes are kept in /proc/$PID
 	
@@ -239,7 +239,7 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
     ls -al /proc/@lab.Variable(processId)
 	```
 
-    ![image02 procID.png](images/image02 procID.png)
+    ![image02 procID.png](images/image02%20procID.png)
 
 	
 
@@ -273,7 +273,7 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 	sha256sum recovered_bin /bin/nc
 	```
 
-	![image03 compare hash.png](images/image03 compare hash.png)
+	![image03 compare hash.png](images/image03%20compare hash.png)
 
 - [] We will now explore the commands (name & full parameters) of the process. Some malware will give itself a vague or closely to legit process names (i.e. apache or sshd), so we can check both /proc/$PID/comm and /proc/$PID/cmdline 
 
@@ -287,7 +287,7 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 	
     Both results are x7 but we can see the parameters that was used when issuing the command 
     
-    ![image04 commands typed.png](images/image04 commands typed.png)
+    ![image04 commands typed.png](images/image04%20commands%20typed.png)
 
 
 - [] Malware process environment. Now let’s take a look at the environment our malware inherited when it started. This can often reveal information about who or what started the process. Here we see the process was started with sudo by another user:
@@ -298,7 +298,7 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 
 	Have a look at the output as it provides information on users, location, directory path, etc 
     
-    ![image05 strings.png](images/image05 strings.png)
+    ![image05 strings.png](images/image05%20strings.png)
 
 - [] We can also see the file descriptors that the malware has open. This can often show you hidden files and directories that the malware is using to stash things along with open sockets:
 
@@ -309,7 +309,7 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 	- This shows that the open file descriptors that process has 
 	- You can see that 0,1,2 stdin/stdout/stderr and there is also an open socket
     
-    ![image06 fd.png](images/image06 fd.png)
+    ![image06 fd.png](images/image06%20fd.png)
 
 - [] Another area to look into is the Linux process maps. This shows libraries the malware is using and again can show links to malicious files it is using as well.
 	
@@ -319,7 +319,7 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 
 	The /proc/$PID/maps file will show libraries and other data the binary has open. It can help reveal hidden areas where the process is stashing data or libraries that are malicious. 
     
-    ![image07 maps.png](images/image07 maps.png)
+    ![image07 maps.png](images/image07%20maps.png)
 
 - [] The /proc/$PID/stack area can sometimes reveal more details. We’ll look at that like this:
 
@@ -329,7 +329,7 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 
 	This file provides additional insights on what the malware/process might be doing. These accept() calls indicate that it is waiting for an inbound network connection. If a process is hiding the network port from netstat, you can still see what it is doing here. 
     
-    ![image08 stack.png](images/image08 stack.png)
+    ![image08 stack.png](images/image08%20stack.png)
 
 - [] Finally, let’s look at /proc/$PID/status for overall process details. This can reveal parent PIDs and so forth.
 
@@ -339,7 +339,7 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 
 	This file gives information on parent PIDs (if any), memory usage, etc
     
-    ![image09 status.png](images/image09 status.png)
+    ![image09 status.png](images/image09%20status.png)
 
 - [] Discussion / Let's Recap 
 	
@@ -505,7 +505,7 @@ Let's explore the above	questions with our Memory dump called **memUbuntu.raw**.
 	It should  look similar to the following, take note of the Inode because we will need it. Your Inode number will be different than the example below if you use your own memory capture. 
 
 
-	![image10 lib64.png](images/image10 lib64.png)
+	![image10 lib64.png](images/image10%20lib64.png)
 
 
 - [] Volatility can be used to "dump" the file from memory using the information from above using the plugin **linux_find_file** and pass the parameter -O $filelame
@@ -528,7 +528,7 @@ Let's explore the above	questions with our Memory dump called **memUbuntu.raw**.
 	docker run --rm -v /home/apnic/memoryanalysis:/data:rw --user root blacktop/volatility --plugins=. -f memUbuntu.raw --profile=LinuxUbuntu_4_4_0-21x64 linux_find_file -i 0xffff88003d1004c8 -O dump.elf
 	```
 
-	![image11 dump elf.png](images/image11 dump elf.png)
+	![image11 dump elf.png](images/image11%20dump%20elf.png)
 
 - [] To extract the binary from memory for our _krn_ process use another plugin called **linux_procdump**. We need to specify the folder for dumping the processes with -D.
 
@@ -541,7 +541,7 @@ Let's explore the above	questions with our Memory dump called **memUbuntu.raw**.
 
 	>[!Warning] There will be an error about permissions, because the docker command mounts the file system as read only.
 
-	![image12 dump error.png](images/image12 dump error.png)
+	![image12 dump error.png](images/image12%20dump%20error.png)
 
 	Update the permissions for **/home/apnic/memoryanalysis/dump** to allow anyone to write to the directory
 
@@ -561,7 +561,7 @@ Let's explore the above	questions with our Memory dump called **memUbuntu.raw**.
 	file dump/krn.1351.0x400000
 	```
 
-	![image13 dump 1351.png](images/image13 dump 1351.png)
+	![image13 dump 1351.png](images/image13%20dump%201351.png)
 
 - [] To confirm any network activities from _krn_, use the plugin **linux_netstat**
 
@@ -650,7 +650,7 @@ In the context of Stuxnet detection, lsass can be examined for anomalies or sign
 	volatility -f stuxnet.vmem imageinfo
 	```
 
-	![image14 profile.png](images/image14 profile.png)
+	![image14 profile.png](images/image14%20profile.png)
 
 - [] Use the suggested profile of **WinXPSP2x86** for the analysis.
 
