@@ -165,10 +165,6 @@ To learn more about Docker refer to:
 
 Remember, while these steps can significantly reduce the risk, no method guarantees 100% safety. It's always a balance between usability, performance, and security.   
 
-
-Please click the Next button to begin.
-===
-<span style="display:block;text-align:center">!IMAGE[apnic_logo.png](instructions243289/apnic_logo.png)</span>
 #<center><b>Lab 1 - Live Forensics</b></center>
 
 This lab provides a practical guide to conducting live forensics on a compromised Linux system, emphasising the importance of investigating suspicious processes in real-time to gather evidence and identify potential security threats. 
@@ -352,10 +348,6 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 
     For more information refer to the cheatsheet: [https://www.sandflysecurity.com/blog/compromised-linux-cheat-sheet/](https://www.sandflysecurity.com/blog/compromised-linux-cheat-sheet/)
 
-Please click the Next button to continue.
-===
-
-<span style="display:block;text-align:center">!IMAGE[apnic_logo.png](instructions243289/apnic_logo.png)</span>
 #<center><b>Lab 2 - Introduction to Volatility</b></center>
 
 For this lab, we will be analysing a linux memory dump from a binary that was obtained from the honeypot. 
@@ -450,10 +442,6 @@ With the memory acquired, we will explore Volatility
 
 	@lab.Activity(Question7)	
 
-Please click the Next button to continue.
-===
-
-<span style="display:block;text-align:center">!IMAGE[apnic_logo.png](instructions243289/apnic_logo.png)</span>
 #<center><b>Lab 3 - Introduction to Volatility part 2</b></center>
 
 In this lab, you will be exploring Volatility and see how to use some features for further analysis. 
@@ -630,10 +618,6 @@ Let's explore the above	questions with our Memory dump called **memUbuntu.raw**.
 	CheatSheets 
 	* [https://downloads.volatilityfoundation.org/releases/2.4/CheatSheet_v2.4.pdf](https://downloads.volatilityfoundation.org/releases/2.4/CheatSheet_v2.4.pdf)
 
-Please click the Next button to continue.
-===
-
-<span style="display:block;text-align:center">!IMAGE[apnic_logo.png](instructions243289/apnic_logo.png)</span>
 #<center><b>Lab 4 - Windows Memory Dump</b></center>
 
 For this lab, use volatility to analyse the memory dump obtained from a Stuxnet infected Microsoft Windows computer. 
