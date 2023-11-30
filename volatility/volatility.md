@@ -217,7 +217,7 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 	ps aux | grep x7 
 	```
 
-    ![image00 ps aux.png](images/image00%20ps$20aux.png)
+    ![](images/image00%20ps$20aux.png)
 
     What is the process ID? 
     
