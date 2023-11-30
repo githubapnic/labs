@@ -214,7 +214,7 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 	ps aux | grep x7 
 	```
 
-    ![image00 ps aux.png](images/image00 ps aux.png)
+    ![](images/image00%20ps%20aux.png)
 
     What is the process ID? 
     
@@ -228,7 +228,7 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 
     netstat shows a process named 'x7' PID with a listening port that of **31337**.
     
-    !IMAGE[image01 netstat.png](instructions243289/image01 netstat.png)
+    !IMAGE[image01 netstat.png](images/image01%20netstat.png)
 
 - [] When doing live forensics on Linux, /proc is your best friend! A lot of information related to running processes are kept in /proc/$PID
 	
