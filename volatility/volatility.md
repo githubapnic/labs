@@ -1,5 +1,5 @@
 
-<span style="display:block;text-align:center">![](instructions243289/apnic_logo.png)</span>
+![](images/apnic_logo.png)
 
 #<center><b>Memory Analysis</b></center>
 
@@ -214,7 +214,7 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 	ps aux | grep x7 
 	```
 
-    !IMAGE[image00 ps aux.png](instructions243289/image00 ps aux.png)
+    !IMAGE[image00 ps aux.png](images/image00 ps aux.png)
 
     What is the process ID? 
     
