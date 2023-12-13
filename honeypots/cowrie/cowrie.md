@@ -206,6 +206,24 @@ The following will be the topology used for this lab.  Note that the IP addresse
 		
 		(cowrie-env) $bin/playlog var/lib/cowrie/tty/fcf3004d8fc51aa573fbfc6dd375aa981087a38b2aa9b056c1b228dce8eb8a2f
 
+## <a name="fenced-code-block">If playlog doesnt work</a>
+Sometimes the installation of playlog doesnt work, so you will need to download the script for git.
+1. Change into the directory to store the playlog script:
+
+		cd /home/cowrie/cowrie/var/lib/cowrie
+
+2. Download the python script called **playlog.py**
+
+		curl https://raw.githubusercontent.com/cowrie/cowrie/master/src/cowrie/scripts/playlog.py
+
+3. Make the script executable
+
+		chmod +x playlog.py
+
+4. Run the script to playback all the captured activity in the Cowrie honeypot
+
+		.playlog.py ../var/lib/cowrie/tty/*
+
 ---
 		
 								***END OF EXERCISE***
