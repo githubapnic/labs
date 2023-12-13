@@ -147,7 +147,7 @@ The following will be the topology used for this lab.  Note that the IP addresse
 
 6. Find where telnet options are in the Cowrie configuration file, and replace the word false with true:
 
-		sed -i '/\[telnet\]/, +3 s/false/true/g' /etc/cowrie.cfg.dist
+		sed -i '/\[telnet\]/, +3 s/false/true/g' etc/cowrie.cfg.dist
 
 | Component | Explanation |
 |-----------|-------------|
@@ -163,7 +163,7 @@ The following will be the topology used for this lab.  Note that the IP addresse
 | `/true/`  | The replacement text (`true`). |
 | `/g`      | Global flag, indicating that all instances of `false` in each line should be replaced with `true`. |
 | `'`       | End of the `sed` command script. |
-| `/etc/cowrie.cfg.dist` | Path of the file to be edited. |
+| `etc/cowrie.cfg.dist` | Path of the file to be edited. |
     
 8. Start Cowrie.   
 
