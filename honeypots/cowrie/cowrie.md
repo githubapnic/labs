@@ -145,33 +145,43 @@ The following will be the topology used for this lab.  Note that the IP addresse
 		(cowrie-env) $ pip install --upgrade pip
 		(cowrie-env) $ pip install --upgrade -r requirements.txt
 
-6. Find where telnet options are in the Cowrie configuration file:
+6. Find where telnet options are in the Cowrie configuration file, and replace the word false with true:
 
-		grep "\[telnet\]" -A 3 -in etc/cowrie.cfg.dist
-		
-	Take not of the line number and use this for the next step
-		
-7. Edit the Cowrie configuration file:
+		sed -i '/\[telnet\]/, +3 s/false/true/g' /etc/cowrie.cfg.dist
 
-		vi +489 etc/cowrie.cfg.dist
-		
-	This should open the file at line number 489. Search for telnet (line 489) and enable telnet (change enabled = false to **enabled = true**)
-	
-	**NOTE**: In `vi` you can use the goto command. To do this, press `Esc` type the line number `489` and then press `Shift+g` . 
-	
-	![](images/image03.png)
-
-8. Save and quit editing the **cowrie.cfg.dist** file, by pressing `ESC` then `:wq` key combination.
+| Component | Explanation |
+|-----------|-------------|
+| `sed`     | Stream editor for filtering and transforming text. |
+| `-i`      | Option for in-place editing, i.e., the original file is modified directly. |
+| `'`       | Start of the `sed` command script. |
+| `\`       | Escape character used to indicate that the following character (`[`) is to be treated as a literal character rather than as a special character. |
+| `[telnet]`| Text to match. The square brackets are part of the text to find in the file. |
+| `/`       | Delimiter separating parts of the `sed` command. |
+| `, +3`    | Indicates a range: starting from the line where `[telnet]` is found to the next 3 lines. |
+| `s`       | Start of the substitution command in `sed`. |
+| `/false/` | The text to find for substitution (`false`). |
+| `/true/`  | The replacement text (`true`). |
+| `/g`      | Global flag, indicating that all instances of `false` in each line should be replaced with `true`. |
+| `'`       | End of the `sed` command script. |
+| `/etc/cowrie.cfg.dist` | Path of the file to be edited. |
     
-9. Start Cowrie.   
+8. Start Cowrie.   
 
 		 $bin/cowrie start
 		
-10. Verify cowrie is running and listening on port **2222** and **2223**
+9. Verify cowrie is running and listening on port **2222** and **2223**
 
-		netstat -nat		
+		ss -nat
+
+| Component | Explanation |
+|-----------|-------------|
+| `ss`      | A utility to investigate sockets. It is used to dump socket statistics and shows information similar to `netstat`. |
+| `-n`      | This option tells `ss` to show numerical addresses instead of trying to determine symbolic host, port, or user names. |
+| `-a`      | Displays all sockets, including both listening and non-listening (connected) sockets. |
+| `-t`      | Restricts the output to only TCP sockets. |
+
 		
-	**NOTE**: Do not close the terminal session to the server (the working directory should still be **/home/cowrie/cowrie**)
+**NOTE**: Do not close the terminal session to the server (the working directory should still be **/home/cowrie/cowrie**)
 		
 ## <a name="fenced-code-block">Rogue Access to another machine</a>
 **NOTE: Open a new terminal window for this exercise**
