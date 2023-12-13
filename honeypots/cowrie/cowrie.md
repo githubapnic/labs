@@ -222,7 +222,7 @@ Sometimes the installation of playlog doesnt work, so you will need to download 
 
 4. Run the script to playback all the captured activity in the Cowrie honeypot
 
-		.playlog.py ../var/lib/cowrie/tty/*
+		./playlog.py ../var/lib/cowrie/tty/*
 
 ---
 		
