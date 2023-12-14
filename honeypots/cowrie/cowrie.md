@@ -200,7 +200,11 @@ The following will be the topology used for this lab.  Note that the IP addresse
 
 1. ssh or telnet to a honeypot instance operated by the person sitting next to you (try with username root and any random password)
 
-		ssh root@192.168.30.X
+		ssh root@192.168.30.X -o UserKnownHostsFile=/dev/null
+
+	NOTE: Type `yes` if asked about wanting to continue connecting
+
+	>[!Hint] This will bypass the **Remote Host Identification Has Changed** check, as the SSH fingerprint would have changed for this IPv4 address.
 		
 2. Once logged in, issue the following commands:
 
@@ -262,6 +266,6 @@ If an error occurs, this could be sometimes related to the installation of playl
 
 ---
 		
-								***END OF EXERCISE***
+<center>***END OF EXERCISE***</center>
 									
 Version: 20230510
