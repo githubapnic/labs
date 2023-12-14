@@ -266,6 +266,6 @@ If an error occurs, this could be sometimes related to the installation of playl
 
 ---
 		
-<div style="text-align: center;">***END OF EXERCISE***</div>
+<p align="center">***END OF EXERCISE***</p>
 									
 Version: 20231214
