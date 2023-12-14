@@ -157,17 +157,17 @@ The following will be the topology used for this lab.  Note that the IP addresse
 
 		sed -i '/\[telnet\]/, +3 s/false/true/g' etc/cowrie.cfg.dist
 
-| Component | Explanation |
-|-----------|-------------|
-| sed     | Stream editor for filtering and transforming text. |
-| -i      | Option for in-place editing, i.e., the original file is modified directly. |
-| [telnet]| Text to match. The square brackets are part of the text to find in the file. |
-| /       | Delimiter separating parts of the sed command. |
-| , +3    | Indicates a range: starting from the line where [telnet] is found to the next 3 lines. |
-| s       | Start of the substitution command in sed. |
-| false   | The text to find for substitution. |
-| true    | The replacement text. |
-| etc/cowrie.cfg.dist | Path of the file to be edited. |
+	| Component | Explanation |
+	|-----------|-------------|
+	| sed     | Stream editor for filtering and transforming text. |
+	| -i      | Option for in-place editing, i.e., the original file is modified directly. |
+	| [telnet]| Text to match. The square brackets are part of the text to find in the file. |
+	| /       | Delimiter separating parts of the sed command. |
+	| , +3    | Indicates a range: starting from the line where [telnet] is found to the next 3 lines. |
+	| s       | Start of the substitution command in sed. |
+	| false   | The text to find for substitution. |
+	| true    | The replacement text. |
+	| etc/cowrie.cfg.dist | Path of the file to be edited. |
 
 	Confirm Telnet is set to **true**
 
