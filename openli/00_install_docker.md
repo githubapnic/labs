@@ -1,4 +1,5 @@
 ![](images/apnic_logo.png)
+
 #<center><b>Lab 0 - Setup Docker</b></center>
 
 This section, is a step-by-step guide on installing Docker, a powerful platform for building, deploying, and managing containerised applications. Once Docker is set up, we'll proceed to configure the OpenLI Docker images, an open-source Lawful Intercept (LI) software solution, primarily developed by the WAND Network Research Group at the University of Waikato. 
