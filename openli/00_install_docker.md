@@ -82,6 +82,8 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 
   ![]("images/openli lab topology for docker.png")
 
+  ![](https://github.com/githubapnic/labs/blob/main/openli/images/openli%20lab%20topology%20for%20docker.png)
+
 - Display the openli docker images that were downloaded.
 
 	```
