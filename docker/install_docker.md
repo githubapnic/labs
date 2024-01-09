@@ -1,60 +1,56 @@
-<span style="display:block;text-align:center">!IMAGE[apnic_logo.png](instructions245793/apnic_logo.png)</span>
+![](images/apnic_logo.png)
 #<center><b>Lab 0 - Setup Docker</b></center>
 
 
-This section, is a step-by-step guide on installing Docker, a powerful platform for building, deploying, and managing containerised applications. Once Docker is set up, we'll proceed to configure the blacktop/volatility Docker image, an essential tool for forensic analysis which integrates Volatility for memory forensics and YARA for malware detection. 
-
-This lab will highlight the convenience and efficiency of using Docker containers for forensic analysis, enabling you to perform sophisticated memory and malware investigations with ease. The containerised approach ensures a consistent and isolated environment, crucial for the integrity and repeatability of forensic analysis.
-
->[!Warning] As this system is not connected to the internet, all the below steps have been completed for you.
+This section, is a step-by-step guide on installing Docker, a powerful platform for building, deploying, and managing containerised applications. 
 
 ###**Install docker**
 
 Login to the Lubuntu desktop and use the terminal for the following exercise. 
 
-- [X] Install dependencies that are required for docker.
+- [] Install dependencies that are required for docker.
 
-	```PowerShell-nocode
+	```
 	sudo apt-get update && sudo apt-get install -y ca-certificates curl gnupg lsb-release
 	```
 
-- [X] Add Docker's gpg public key to the trusted store.
+- [] Add Docker's gpg public key to the trusted store.
 
-	```PowerShell-nocode
+	```
 	sudo mkdir -p /etc/apt/keyrings && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 	```
 
-- [X] Add Docker's repo to the list of sources that Ubuntu can install software from.
+- [] Add Docker's repo to the list of sources that Ubuntu can install software from.
 
-	```PowerShell-nocode
+	```
 	echo \
 	"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
 	$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 	```
 
-- [X] Install Docker.
+- [] Install Docker.
 
-	```PowerShell-nocode
+	```
 	sudo apt-get update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 	```
 
-- [X] Add the current user to the Docker group.
+- [] Add the current user to the Docker group.
 
-	```PowerShell-nocode
+	```
 	sudo groupadd docker 2>/dev/null || true && sudo usermod -aG docker $USER
 	```
 
 	>[!Hint] In this command, 2>/dev/null redirects any error output of the groupadd command to /dev/null, effectively hiding it. If the group exists, the error is ignored, and the script continues to add the user to the Docker group.
 
-- [X] Log off and back on or restart to make the new group active or can use **su - apnic**
+- [] Log off and back on or restart to make the new group active or can use **su - apnic**
 
-	```PowerShell-nocode
+	```
 	su - apnic
 	```
 
-- [X] Confirm docker is installed.
+- [] Confirm docker is installed.
 
-	```PowerShell-nocode
+	```
 	docker compose version
 	```
 
@@ -62,17 +58,17 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 
 ###**Download the Openli docker image**	
 
-- [X] Download the openli lab docker image install script from [https://github.com/wanduow/openli-training-lab.git](https://github.com/wanduow/openli-training-lab.git)
+- [] Download the openli lab docker image install script from [https://github.com/wanduow/openli-training-lab.git](https://github.com/wanduow/openli-training-lab.git)
 
-	```PowerShell-nocode
+	```
 	git clone https://github.com/wanduow/openli-training-lab.git
 	```
 
 	>[!Hint] Always review the script before running it [https://github.com/OpenLI-NZ/openli-training-lab/blob/master/setup.sh](https://github.com/OpenLI-NZ/openli-training-lab/blob/master/setup.sh)
 
-- [X] Run the setup script.
+- [] Run the setup script.
 
-	```PowerShell-nocode
+	```
 	cd openli-training-lab
     ./setup.sh
 	```
@@ -82,21 +78,21 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
     The script creates the following lab topology [https://files.openli.nz/tutorial/chapter006.pdf#page=11](https://files.openli.nz/tutorial/chapter006.pdf#page=11)
     !IMAGE[openli lab topology for docker.png](instructions245793/openli lab topology for docker.png)
 
-- [X] Display the openli docker images that were downloaded.
+- [] Display the openli docker images that were downloaded.
 
-	```PowerShell-nocode
+	```
 	docker images
 	```
 
-- [X] Confirm the openli docker images are running.
+- [] Confirm the openli docker images are running.
 
-	```PowerShell-nocode
+	```
 	docker ps
 	```	
 
-- [X] Confirm the openli docker networks are running.
+- [] Confirm the openli docker networks are running.
 
-	```PowerShell-nocode
+	```
 	docker network ls | grep open
 	```
 
