@@ -78,7 +78,7 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
     This script sets up a Docker-based environment for OpenLI lab. It starts by creating three Docker networks named **openli-lab**, **openli-agency**, and **openli-lab-replay**, each with specific configurations. Then, it stops any running Docker containers that have names starting with openli-. After stopping these containers, the script launches new Docker containers named **openli-agency**, **openli-provisioner**, **openli-mediator**, and **openli-collector** using images from quay.io/openli/training. These containers are then connected to the previously created networks in a specified configuration. 
 
     The script creates the following lab topology [https://files.openli.nz/tutorial/chapter006.pdf#page=11](https://files.openli.nz/tutorial/chapter006.pdf#page=11)
-    !IMAGE[openli lab topology for docker.png](instructions245793/openli lab topology for docker.png)
+    ![](images/openli lab topology for docker.png)
 
 - Display the openli docker images that were downloaded.
 
