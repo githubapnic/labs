@@ -8,19 +8,19 @@ This section, is a step-by-step guide on installing Docker, a powerful platform 
 
 Login to the Lubuntu desktop and use the terminal for the following exercise. 
 
-- [] Install dependencies that are required for docker.
+- Install dependencies that are required for docker.
 
 	```
 	sudo apt-get update && sudo apt-get install -y ca-certificates curl gnupg lsb-release
 	```
 
-- [] Add Docker's gpg public key to the trusted store.
+- Add Docker's gpg public key to the trusted store.
 
 	```
 	sudo mkdir -p /etc/apt/keyrings && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 	```
 
-- [] Add Docker's repo to the list of sources that Ubuntu can install software from.
+- Add Docker's repo to the list of sources that Ubuntu can install software from.
 
 	```
 	echo \
@@ -28,13 +28,13 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 	$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 	```
 
-- [] Install Docker.
+- Install Docker.
 
 	```
 	sudo apt-get update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 	```
 
-- [] Add the current user to the Docker group.
+- Add the current user to the Docker group.
 
 	```
 	sudo groupadd docker 2>/dev/null || true && sudo usermod -aG docker $USER
@@ -42,13 +42,13 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 
 	>[!Hint] In this command, 2>/dev/null redirects any error output of the groupadd command to /dev/null, effectively hiding it. If the group exists, the error is ignored, and the script continues to add the user to the Docker group.
 
-- [] Log off and back on or restart to make the new group active or can use **su - apnic**
+- Log off and back on or restart to make the new group active or can use **su - apnic**
 
 	```
 	su - apnic
 	```
 
-- [] Confirm docker is installed.
+- Confirm docker is installed.
 
 	```
 	docker compose version
@@ -58,7 +58,7 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 
 ###**Download the Openli docker image**	
 
-- [] Download the openli lab docker image install script from [https://github.com/wanduow/openli-training-lab.git](https://github.com/wanduow/openli-training-lab.git)
+- Download the openli lab docker image install script from [https://github.com/wanduow/openli-training-lab.git](https://github.com/wanduow/openli-training-lab.git)
 
 	```
 	git clone https://github.com/wanduow/openli-training-lab.git
@@ -66,7 +66,7 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 
 	>[!Hint] Always review the script before running it [https://github.com/OpenLI-NZ/openli-training-lab/blob/master/setup.sh](https://github.com/OpenLI-NZ/openli-training-lab/blob/master/setup.sh)
 
-- [] Run the setup script.
+- Run the setup script.
 
 	```
 	cd openli-training-lab
@@ -78,19 +78,19 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
     The script creates the following lab topology [https://files.openli.nz/tutorial/chapter006.pdf#page=11](https://files.openli.nz/tutorial/chapter006.pdf#page=11)
     !IMAGE[openli lab topology for docker.png](instructions245793/openli lab topology for docker.png)
 
-- [] Display the openli docker images that were downloaded.
+- Display the openli docker images that were downloaded.
 
 	```
 	docker images
 	```
 
-- [] Confirm the openli docker images are running.
+- Confirm the openli docker images are running.
 
 	```
 	docker ps
 	```	
 
-- [] Confirm the openli docker networks are running.
+- Confirm the openli docker networks are running.
 
 	```
 	docker network ls | grep open
