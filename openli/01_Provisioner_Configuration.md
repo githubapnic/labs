@@ -1,4 +1,5 @@
 ![](images/apnic_logo.png)
+
 #<center><b>Lab 1 - Provisioner Configuration</b></center>
 
 Credits to **Shane Alcock** and the **University of Waikato New Zealand**, for more detail refer to [https://www.openli.nz/tutorials/](https://www.openli.nz/tutorials/)
@@ -64,7 +65,6 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 
 	What is the IP address? 
     
-    @lab.TextBox(PROVIP) 
 
 - View the provisioner's configuration file.
 
@@ -75,7 +75,7 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 - Replace the provisioner's IP address for the variable called **PROVIP**. 
 
     ```
-    sed -i 's/<PROVIP>/@lab.Variable(PROVIP)/g' /etc/openli/provisioner-config.yaml
+    sed -i 's/<PROVIP>/172.18.0.2/g' /etc/openli/provisioner-config.yaml
 	```
 
 - Replace the variable called **COLLECTORPORT** with port 9001.
