@@ -80,7 +80,7 @@ Login to the Lubuntu desktop and use the terminal for the following exercise.
 
     The script creates the following lab topology [https://files.openli.nz/tutorial/chapter006.pdf#page=11](https://files.openli.nz/tutorial/chapter006.pdf#page=11)
 
-  ![](images/openli lab topology for docker.png)
+  ![](images/openli%20lab$20topology%20for%20docker.png)
 
 - Display the openli docker images that were downloaded.
 
