@@ -6,7 +6,7 @@ OpenLI is an open-source Lawful Intercept (LI) software solution, primarily deve
 
 For more detail refer to [https://www.openli.nz/tutorials/](https://www.openli.nz/tutorials/) and [https://github.com/OpenLI-NZ/openli/wiki/OpenLI-Tutorial](https://github.com/OpenLI-NZ/openli/wiki/OpenLI-Tutorial)
 
-The ETSI standard for Lawful Interception is ETSI TS 102 232. This standard defines the HI2 and HI3 interfaces, which are used by Communication Service Providers (CSPs) to transmit intercepted signaling (HI2) and content (HI3) to Law Enforcement Agencies (LEAs).
+The ETSI standard for Lawful Interception is ETSI TS 102 232. This standard defines the HI2 and HI3 interfaces, which are used by Internet Service Providers (ISPs) to transmit intercepted signaling (HI2) and content (HI3) to Law Enforcement Agencies (LEAs).
 
 For more detail refer to [https://youtu.be/UCvKDVEqedM](https://youtu.be/UCvKDVEqedM)
 
