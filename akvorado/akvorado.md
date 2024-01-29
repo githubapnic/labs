@@ -867,7 +867,7 @@ Requirements :
     show running-config | section flow
     ```
 
-    ![](images/asstats-image06.png){400}
+    ![](images/asstats-image06.png)
 
 
 
@@ -877,7 +877,7 @@ Requirements :
     show flow exporter
     ```
 
-    ![](images/asstats-image07.png){400}
+    ![](images/asstats-image07.png)
 
 - Confirm flow monitor is enabled:
 
@@ -885,7 +885,7 @@ Requirements :
     show flow monitor
     ```
 
-    ![](images/asstats-image08.png){400}
+    ![](images/asstats-image08.png)
 
 - Display the flow record information for IPv4:
 
