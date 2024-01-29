@@ -867,7 +867,7 @@ Requirements :
     show running-config | section flow
     ```
 
-    !IMAGE[asstats-image06.png](asstats-image06.png){400}
+    ![](images/asstats-image06.png){400}
 
 
 
@@ -877,7 +877,7 @@ Requirements :
     show flow exporter
     ```
 
-    !IMAGE[asstats-image07.png](asstats-image07.png){400}
+    ![](images/asstats-image07.png){400}
 
 - Confirm flow monitor is enabled:
 
@@ -885,7 +885,7 @@ Requirements :
     show flow monitor
     ```
 
-    !IMAGE[asstats-image08.png](asstats-image08.png){400}
+    ![](images/asstats-image08.png){400}
 
 - Display the flow record information for IPv4:
 
@@ -1129,9 +1129,9 @@ For more detail about netflow refer to [https://youtu.be/aqTpUmUibB8](https://yo
 
 - Right mouse click on a packet, and select **decode as**. 
 
-    !IMAGE[wireshark_view_netflow_01.png](instructions223105/wireshark_view_netflow_01.png)
+    ![](images/wireshark_view_netflow_01.png])
 
-    !IMAGE[wireshark_view_netflow_02.png](instructions223105/wireshark_view_netflow_02.png)
+    ![](images/wireshark_view_netflow_02.png)
 
 - Use Firefox and browse to the Akvorado HTTP server `http://group30-server.apnictraining.net:8083`. The page should show some graphs have been generated. 
 
