@@ -9,7 +9,7 @@
     flow:
       inputs:
         - decoder: netflow
-          listen: 0.0.0.0:9995
+          listen: 0.0.0.0:2055
           type: udp
           workers: 6
         - decoder: sflow
