@@ -26,8 +26,8 @@
       pollertimeout: 1s
       pollercoalesce: 10
       workers: 10
-      communities:
-        defaultcommunity: training
+      defaultcommunity: training      
+      communities: {}
       securityparameters: {}
     geoip:
       asndatabase: /usr/share/GeoIP/GeoLite2-ASN.mmdb
