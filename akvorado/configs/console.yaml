@@ -1,0 +1,41 @@
+---
+# console:
+  - reporting:
+      logging: {}
+      metrics: {}
+    http:
+      listen: 0.0.0.0:8083
+      profiler: false
+    defaultvisualizeoptions:
+      start: 6 hours ago
+      end: now
+      filter: InIfBoundary = external
+      dimensions:
+        - SrcAS
+    homepagetopwidgets:
+      - src-as
+      - src-port
+      - protocol
+      - src-country
+      - etype
+    clickhouse:
+      servers:
+        - 127.0.0.1:9000
+      database: default
+      password: training
+      maxopenconns: 10
+      dialtimeout: 5s
+    auth:
+      headers:
+        login: Remote-User
+        name: Remote-Name
+        email: Remote-Email
+        logouturl: X-Logout-URL
+      defaultuser:
+        login: __default
+        name: Default User
+        email: ""
+        logouturl: ""
+    database:
+      driver: sqlite
+      dsn: /var/lib/akvorado/console.sqlite

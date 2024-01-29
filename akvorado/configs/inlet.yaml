@@ -1,0 +1,65 @@
+---
+# inlet:
+  - reporting:
+      logging: {}
+      metrics: {}
+    http:
+      listen: 0.0.0.0:8082
+      profiler: false
+    flow:
+      inputs:
+        - decoder: netflow
+          listen: 0.0.0.0:9995
+          type: udp
+          workers: 6
+        - decoder: sflow
+          listen: 0.0.0.0:6343
+          type: udp
+          workers: 6
+      ratelimit: 0
+    snmp:
+      cacheduration: 30m0s
+      cacherefresh: 1h0m0s
+      cachecheckinterval: 1m0s
+      cachepersistfile: /var/lib/akvorado/snmp_cache
+      pollerretries: 1
+      pollertimeout: 1s
+      pollercoalesce: 10
+      workers: 10
+      communities:
+        defaultcommunity: training
+      securityparameters: {}
+    geoip:
+      asndatabase: /usr/share/GeoIP/GeoLite2-ASN.mmdb
+      geodatabase: /usr/share/GeoIP/GeoLite2-Country.mmdb
+      optional: false
+    kafka:
+      topic: flows
+      brokers:
+        - 127.0.0.1:9092
+      version: 3.6.1
+      flushinterval: 10s
+      flushbytes: 104857599
+      maxmessagebytes: 1000000
+      compressioncodec: none
+      queuesize: 32
+    core:
+      workers: 1
+      exporterclassifiers:
+        - ClassifySiteRegex(Exporter.Name, "^([^-]+)-", "$1")
+        - ClassifyRegion("Australia")
+        - ClassifyTenant("APNIC")
+        - ClassifyRole("training")
+      interfaceclassifiers:
+        - >
+          ClassifyConnectivityRegex(Interface.Description,
+          "^(?i)(ge|Gigabit):? ", "$1") &&
+          ClassifyProviderRegex(Interface.Description, "^\\S+?\\s(\\S+)", "$1") &&
+          ClassifyExternal()
+        - ClassifyInternal()
+      # classifiercachesize: 1000
+      defaultsamplingrate: {}
+      overridesamplingrate: 1024
+      asnproviders:
+        - flow
+        - geoip

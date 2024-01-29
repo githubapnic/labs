@@ -1,0 +1,13 @@
+[Unit]
+Description=Akvorado Orchestrator
+After=snap.lxd.daemon.service
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=15
+User=akvorado
+ExecStart=akvorado orchestrator /etc/akvorado.yaml
+
+[Install]
+WantedBy=multi-user.target

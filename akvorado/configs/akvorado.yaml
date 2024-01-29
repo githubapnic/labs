@@ -1,0 +1,45 @@
+---
+reporting:
+  logging: {}
+  metrics: {}
+http:
+  listen: 0.0.0.0:8081
+  profiler: false
+clickhouse:
+  servers:
+    - 127.0.0.1:9000
+  database: default
+  password: training
+  maxopenconns: 10
+  dialtimeout: 5s
+  kafka:
+    topic: flows
+    brokers:
+      - 127.0.0.1:9092
+    version: 3.6.1
+    consumers: 1
+  resolutions:
+    - interval: 0s
+      ttl: 360h0m0s
+    - interval: 1m0s
+      ttl: 168h0m0s
+    - interval: 5m0s
+      ttl: 2160h0m0s
+    - interval: 1h0m0s
+      ttl: 8640h0m0s
+  maxpartitions: 50
+  asns: {}
+  networks: {}
+  orchestratorurl: ""
+kafka:
+  topic: flows
+  brokers:
+    - 127.0.0.1:9092
+  version: 3.6.1
+  topicconfiguration:
+    numpartitions: 1
+    replicationfactor: 1
+    configentries: {}
+inlet: !include "inlet.yaml"
+console: !include "console.yaml"
+demoexporter: []
