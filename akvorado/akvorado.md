@@ -116,54 +116,6 @@ The steps to complete this section are:
 
     Press `ctrl+c` to close the service.
 
-
-    >[!Hint] This requires to open 4 terminal windows and run 4 different commands. The easiest way to do this is to create a script that utilises tmux sessions. For example:
-
-    ```Powershell-nocode
-    cat << 'EOF' > ~/configure_kafka.sh
-    #!/bin/bash
-
-    # Change into the kafka folder
-    cd ~/kafka_2.13-3.6.1
-    
-    # Start a new tmux session
-    tmux new-session -d -s mySession
-
-    # Window 0: Start the ZooKeeper service
-    tmux send-keys -t mySession:0 'bin/zookeeper-server-start.sh config/zookeeper.properties' C-m
-
-    # Window 1: Start the Kafka broker service
-    tmux new-window -t mySession
-    tmux send-keys -t mySession:1 'bin/kafka-server-start.sh config/server.properties' C-m
-
-    # Window 2: Create Kafka topic
-    tmux new-window -t mySession
-    tmux send-keys -t mySession:2 'bin/kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092' C-m
-
-    # Window 3: Describe Kafka topic
-    tmux new-window -t mySession
-    tmux send-keys -t mySession:3 'bin/kafka-topics.sh --describe --topic quickstart-events --bootstrap-server localhost:9092' C-m
-
-    # Attach to the tmux session
-    # tmux attach-session -t mySession
-
-    # Detach from the session
-    tmux detach -s mySession
-
-    # Background process to wait for 5 seconds and then end the session if last two commadns are completed
-    (
-    sleep 5
-
-    # Check if the last two commands have completed
-    if ! tmux capture-pane -p -t mySession:2 | grep -q '[^[:space:]]' && \
-        ! tmux capture-pane -p -t mySession:3 | grep -q '[^[:space:]]'; then
-        tmux kill-session -t mySession
-    fi
-    ) &
-    
-    EOF
-    ```
-
 - Create a user to run the Kafka service
 
     ```
