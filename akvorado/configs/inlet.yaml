@@ -18,31 +18,32 @@
           workers: 6
       ratelimit: 0
     snmp:
-      cacheduration: 30m0s
-      cacherefresh: 1h0m0s
-      cachecheckinterval: 1m0s
-      cachepersistfile: /var/lib/akvorado/snmp_cache
-      pollerretries: 1
-      pollertimeout: 1s
-      pollercoalesce: 10
+      cache-duration: 30m0s
+      cache-refresh: 1h0m0s
+      cache-check-interval: 1m0s
+      cache-persist-file: /var/lib/akvorado/snmp_cache
+      poller-retries: 1
+      poller-timeout: 1s
+      poller-coalesce: 10
       workers: 10
-      defaultcommunity: training      
-      communities: {}
-      securityparameters: {}
+      # defaultcommunity: training      
+      communities:
+        ::/0: training      
+      security-parameters: {}
     geoip:
-      asndatabase: /usr/share/GeoIP/GeoLite2-ASN.mmdb
-      geodatabase: /usr/share/GeoIP/GeoLite2-Country.mmdb
+      asn-database: /usr/share/GeoIP/GeoLite2-ASN.mmdb
+      geo-database: /usr/share/GeoIP/GeoLite2-Country.mmdb
       optional: true
     kafka:
       topic: flows
       brokers:
         - 127.0.0.1:9092
       version: 3.6.1
-      flushinterval: 10s
-      flushbytes: 104857599
-      maxmessagebytes: 1000000
-      compressioncodec: none
-      queuesize: 32
+      flush-interval: 10s
+      flush-bytes: 104857599
+      max-message-bytes: 1000000
+      compression-codec: none
+      queue-size: 32
     core:
       override-sampling-rate: 10
       workers: 1
