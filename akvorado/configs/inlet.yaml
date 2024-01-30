@@ -61,6 +61,6 @@
           ClassifyInternal()
       # classifiercachesize: 1000
       default-sampling-rate: {}
-      asnproviders:
+      asn-providers:
         - flow
         - geoip
