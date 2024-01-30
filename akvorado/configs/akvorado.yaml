@@ -10,8 +10,6 @@ clickhouse:
     - 127.0.0.1:9000
   database: default
   password: training
-  maxopenconns: 10
-  dialtimeout: 5s
   kafka:
     topic: flows
     brokers:
@@ -27,19 +25,19 @@ clickhouse:
       ttl: 2160h0m0s
     - interval: 1h0m0s
       ttl: 8640h0m0s
-  maxpartitions: 50
+  max-partitions: 50
   asns: {}
   networks: {}
-  orchestratorurl: ""
+  orchestrator-url: ""
 kafka:
   topic: flows
   brokers:
     - 127.0.0.1:9092
   version: 3.6.1
-  topicconfiguration:
-    numpartitions: 1
-    replicationfactor: 1
-    configentries: {}
+  topic-configuration:
+    num-partitions: 1
+    replication-factor: 1
+    config-entries: {}
 inlet: !include "inlet.yaml"
 console: !include "console.yaml"
-demoexporter: []
+#demoexporter: []
