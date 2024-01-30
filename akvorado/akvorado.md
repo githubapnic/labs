@@ -1,6 +1,3 @@
-![](images/apnic_logo.png)
-#<center><b>Install Akvorado</b></center>
-
 ###**Install Akvorado**
 
 Akvorado is a software tool designed for collecting, enriching, and visualizing network flows. It functions by receiving network flows from routers using protocols like NetFlow v9, IPFIX, or sFlow. Once these flows are received, Akvorado enriches them with additional information such as GeoIP and interface names. These enriched flows are then exported to Apache Kafka, a distributed queue system, and subsequently stored in ClickHouse, a column-oriented database. Akvorado also features a web frontend that allows users to run queries and analyze the collected data.
@@ -42,7 +39,7 @@ The steps to complete this section are:
 - Install required software
 
     ```
-    sudo apt install -y wget nano git default-jre tmux screen apt-transport-https ca-certificates dirmngr
+    sudo apt install -y wget nano git default-jre apt-transport-https ca-certificates dirmngr
     ```
 
 - Download and extract Kafka.
@@ -155,10 +152,18 @@ The steps to complete this section are:
 
 - Setup the Zookeeper and Kafka services to run on start using systemd services.
 
-    Enable Zookeeper service to restart
+    >[!Warning] The paste function in this environment has issues with latency and may skip or add characters. To avoid this issue, the config files can be downloaded from github.
+
+    Download the systemd file for Zookeeper service to restart and move to the systemd directory.
 
     ```
-    sudo tee /etc/systemd/system/zookeeper.service << 'EOF'
+    wget -O ~/zookeeper.service https://raw.githubusercontent.com/githubapnic/labs/main/akvorado/configs/zookeeper.service
+    sudo mv ~/zookeeper.service /etc/systemd/system/zookeeper.service
+    ```
+
+    Below is the example systemd file for Zookeeper service to restart. 
+
+    ```Powershell-nocode
     [Unit]
     Description=Bootstrapped Zookeeper
     After=syslog.target network.target
@@ -172,13 +177,18 @@ The steps to complete this section are:
 
     [Install]
     WantedBy=multi-user.target
-    EOF
     ```
 
-    Enable Kafka service to restart
+    Download the systemd file for Kafka service to restart and move to the systemd directory.
 
     ```
-    sudo tee /etc/systemd/system/kafka.service << 'EOF'
+    wget -O ~/kafka.service https://raw.githubusercontent.com/githubapnic/labs/main/akvorado/configs/kafka.service
+    sudo mv ~/kafka.service /etc/systemd/system/kafka.service
+    ```
+
+    Below is the example systemd file for Kafka service to restart. 
+
+    ```Powershell-nocode
     [Unit]
     Description=Apache Kafka
     Requires=zookeeper.service
@@ -193,10 +203,9 @@ The steps to complete this section are:
 
     [Install]
     WantedBy=multi-user.target
-    EOF
     ```
 
-- Enablethe Zookeeper and Kafka services and start the services.
+- Enable the Zookeeper and Kafka services and start the services.
 
     ```
     sudo systemctl daemon-reload
@@ -288,9 +297,20 @@ The steps to complete this section are:
 
 - Create the akvorado.yaml file that holds some configuration options.
 
+    >[!Warning] The paste function in this environment has issues with latency and may skip or add characters. To avoid this issue, the config files can be downloaded from github.
 
-```
-sudo tee /etc/akvorado.yaml << 'EOF'
+    Download the akvorado configuration yaml files and move to the correct directory.
+
+    ```
+    wget -O ~/akvorado.yaml https://raw.githubusercontent.com/githubapnic/labs/main/akvorado/configs/akvorado.yaml
+    sudo mkdir /etc/akvorado
+    sudo mv ~/akvorado.yaml /etc/akvorado/akvorado.yaml
+    ```
+
+    Below is the example configuration for the akvorado.yaml file. 
+
+
+```Powershell-nocode
 ---
 reporting:
   logging: {}
@@ -303,8 +323,6 @@ clickhouse:
     - 127.0.0.1:9000
   database: default
   password: training
-  maxopenconns: 10
-  dialtimeout: 5s
   kafka:
     topic: flows
     brokers:
@@ -320,34 +338,39 @@ clickhouse:
       ttl: 2160h0m0s
     - interval: 1h0m0s
       ttl: 8640h0m0s
-  maxpartitions: 50
+  max-partitions: 50
   asns: { 135536: R3 Corporation }
   networks: null
-  orchestratorurl: ""
+  orchestrator-url: ""
 kafka:
   topic: flows
   brokers:
     - 127.0.0.1:9092
   version: 3.6.1
-  topicconfiguration:
-    numpartitions: 1
-    replicationfactor: 1
-    configentries: {}
+  topic-configuration:
+    num-partitions: 1
+    replication-factor: 1
+    config-entries: {}
 inlet: !include "inlet.yaml"
 console: !include "console.yaml"
-demoexporter: []
-EOF
+#demoexporter: []
 ```
 
 >[!Knowledge] For more detail on the yaml configuration refer to:
 * [https://demo.akvorado.net/docs/configuration](https://demo.akvorado.net/docs/configuration)
 * [https://github.com/akvorado/akvorado/tree/main/config](https://github.com/akvorado/akvorado/tree/main/config)
 
-Create the inlet.yaml file that holds the inlet configuration options.
-
+Download the inlet.yaml file that holds the inlet configuration options and move to the correct directory.
 
 ```
-sudo tee /etc/inlet.yaml << 'EOF'
+wget -O ~/inlet.yaml https://raw.githubusercontent.com/githubapnic/labs/main/akvorado/configs/inlet.yaml
+sudo mv ~/inlet.yaml /etc/akvorado/inlet.yaml
+```
+
+Below is the example configuration for the inlet.yaml file. 
+
+
+```Powershell-nocode
 ---
 # inlet:
   - reporting:
@@ -359,67 +382,72 @@ sudo tee /etc/inlet.yaml << 'EOF'
     flow:
       inputs:
         - decoder: netflow
-          listen: 0.0.0.0:9995
+          listen: 0.0.0.0:2055
           type: udp
-          workers: 1
+          workers: 6
         - decoder: sflow
           listen: 0.0.0.0:6343
           type: udp
-          workers: 1
-      ratelimit: 0
+          workers: 6
+      rate-limit: 0
     snmp:
-      cacheduration: 30m0s
-      cacherefresh: 1h0m0s
-      cachecheckinterval: 2m0s
-      cachepersistfile: /var/lib/akvorado/snmp_cache
-      pollerretries: 1
-      pollertimeout: 1s
-      pollercoalesce: 10
-      workers: 1
+      cache-duration: 30m0s
+      cache-refresh: 1h0m0s
+      cache-check-interval: 2m0s
+      cache-persist-file: /var/lib/akvorado/snmp_cache
+      poller-retries: 1
+      poller-timeout: 1s
+      poller-coalesce: 10
+      workers: 10
       communities:
         192.168.30.0/24: training
-      securityparameters: {}
+      security-parameters: {}
     geoip:
-      asndatabase: /usr/share/GeoIP/GeoLite2-ASN.mmdb
-      geodatabase: /usr/share/GeoIP/GeoLite2-Country.mmdb
-      optional: false
+      asn-database: /usr/share/GeoIP/GeoLite2-ASN.mmdb
+      geo-database: /usr/share/GeoIP/GeoLite2-Country.mmdb
+      optional: true
     kafka:
       topic: flows
       brokers:
         - 127.0.0.1:9092
       version: 3.6.1
-      flushinterval: 10s
-      flushbytes: 104857599
-      maxmessagebytes: 1000000
-      compressioncodec: none
-      queuesize: 32
+      flush-interval: 10s
+      flush-bytes: 104857599
+      max-message-bytes: 1000000
+      compression-codec: none
+      queue-size: 32
     core:
-      workers: 1
-      exporterclassifiers:
+      workers: 6
+      exporter-classifiers:
         - ClassifySiteRegex(Exporter.Name, "^([^-]+)-", "$1")
         - ClassifyRegion("Australia")
         - ClassifyTenant("APNIC")
         - ClassifyRole("training")
-      interfaceclassifiers:
-        - >
-          ClassifyConnectivityRegex(Interface.Description,
-          "^(?i)(ge|Gigabit):? ", "$1") &&
-          ClassifyProviderRegex(Interface.Description, "^\\S+?\\s(\\S+)", "$1") &&
+      interface-classifiers:
+        - |
+          # ClassifyConnectivityRegex(Interface.Description, "^(?i)(transit|pni|ppni|ix):? ", "$1") &&
+          # ClassifyProviderRegex(Interface.Description, "^\\S+?\\s(\\S+)", "$1") &&
           ClassifyExternal()
-        - ClassifyInternal()
-      # classifiercachesize: 1000
-      defaultsamplingrate: {}
-      overridesamplingrate: 1024
-      asnproviders:
+        - ClassifyConnectivityRegex(Interface.Description,"^(?i)(ge|Gigabit):? ", "$1") &&
+          ClassifyInternal()
+      classifier-cache-size: 1000
+      default-sampling-rate: {}
+      override-sampling-rate: 10
+      asn-providers:
         - flow
         - geoip
-EOF
 ```
    
-Create the console.yaml file that holds the console configuration options.
+Download the console.yaml file that holds the console configuration options and move to the correct directory.
 
 ```
-sudo tee /etc/console.yaml << 'EOF'
+wget -O ~/console.yaml https://raw.githubusercontent.com/githubapnic/labs/main/akvorado/configs/console.yaml
+sudo mv ~/console.yaml /etc/akvorado/console.yaml
+```
+
+Below is the example configuration for the inlet.yaml file. 
+
+```Powershell-nocode
 ---
 # console:
   - reporting:
@@ -428,40 +456,27 @@ sudo tee /etc/console.yaml << 'EOF'
     http:
       listen: 0.0.0.0:8083
       profiler: false
-    defaultvisualizeoptions:
+    default-visualize-options:
       start: 6 hours ago
       end: now
       filter: InIfBoundary = external
       dimensions:
         - SrcAS
-    homepagetopwidgets:
+    homepage-top-widgets:
       - src-as
       - src-port
       - protocol
       - src-country
       - etype
+      - exporter
     clickhouse:
       servers:
         - 127.0.0.1:9000
       database: default
       password: training
-      maxopenconns: 10
-      dialtimeout: 5s
-    auth:
-      headers:
-        login: Remote-User
-        name: Remote-Name
-        email: Remote-Email
-        logouturl: X-Logout-URL
-      defaultuser:
-        login: __default
-        name: Default User
-        email: ""
-        logouturl: ""
     database:
       driver: sqlite
       dsn: /var/lib/akvorado/console.sqlite
-EOF
 ```
 
 
@@ -469,18 +484,16 @@ EOF
 Set the file ownership to akvorado user account
 
 ```
-sudo chown akvorado:akvorado /etc/akvorado.yaml
-sudo chown akvorado:akvorado /etc/console.yaml
-sudo chown akvorado:akvorado /etc/inlet.yaml
+sudo chown -R akvorado:akvorado /etc/akvorado
 ```
 
 Check if the yaml file is formatted correctly
 
 ```
-akvorado orchestrator /etc/akvorado.yaml --dump --check
+akvorado orchestrator /etc/akvorado/akvorado.yaml --dump --check
 ```
 
->[!Warning] If there is an error, sometimes characters are skipped or missing when pasting the yaml file from the instructions. Try creating the akvorado.yaml file again.
+>[!Warning] If there is an error, read the message as it will indicate how to fix the problem. If there is no issue, it will output the above configuration ending with **demoexporter: []**
 
 - Create the directories and folders that are referenced in the akvorado.yaml file
 
@@ -507,7 +520,7 @@ akvorado orchestrator /etc/akvorado.yaml --dump --check
     Restart=on-failure
     RestartSec=15
     User=akvorado
-    ExecStart=akvorado orchestrator /etc/akvorado.yaml
+    ExecStart=akvorado orchestrator /etc/akvorado/akvorado.yaml
     
     [Install]
     WantedBy=multi-user.target
@@ -740,7 +753,7 @@ Requirements :
 
 - Generate some traffic from R1:
 
-    Ping the AS-Stat server
+    Ping the AKVORADO server
 
     ```
     ping 192.168.30.10 repeat 3
@@ -838,29 +851,29 @@ Requirements :
     enable
     config t
     !
-    flow exporter AS-STATS
+    flow exporter AKVORADO
       destination 192.168.30.10
       source GigabitEthernet1
-      transport udp 9995
+      transport udp 2055
     !
-    flow monitor IPV4-AS-STATS
-      exporter AS-STATS
+    flow monitor IPV4-AKVORADO
+      exporter AKVORADO
       record netflow ipv4 original-input
       cache timeout active 300
       cache entries 16384
     !
-    flow monitor IPV6-AS-STATS
-      exporter AS-STATS
+    flow monitor IPV6-AKVORADO
+      exporter AKVORADO
       record netflow ipv6 original-input
       cache timeout active 300
       cache entries 16384
     !    
-    sampler AS-STATS-SM
+    sampler AKVORADO-SM
         mode random 1 out-of 10000
     !
     interface GigabitEthernet2
-      ip flow monitor IPV4-AS-STATS input
-      ip flow monitor IPV6-AS-STATS input
+      ip flow monitor IPV4-AKVORADO input
+      ip flow monitor IPV6-AKVORADO input
     !
     end
     wr
@@ -925,24 +938,24 @@ Requirements :
     show flow exporter statistics
     ```
 
-    >[!Hint] Or to view stats for the named AS-STATS exporter `show flow exporter AS-STATS statistics`
+    >[!Hint] Or to view stats for the named AKVORADO exporter `show flow exporter AKVORADO statistics`
 
 - Check flow monitor statistics:
 
     ```
-    show flow monitor IPV4-AS-STATS statistics
+    show flow monitor IPV4-AKVORADO statistics
     ```
 
 - View the flow monitor cache:
 
     ```
-    show flow monitor IPV4-AS-STATS cache
+    show flow monitor IPV4-AKVORADO cache
     ```
 
 - Confirm which AS is shared with the flow monitor cache:
 
     ```
-    show flow monitor IPV4-AS-STATS cache | inc AS
+    show flow monitor IPV4-AKVORADO cache | inc AS
     ```
 
    
@@ -963,7 +976,7 @@ For more detail about netflow refer to [https://youtu.be/aqTpUmUibB8](https://yo
     configure
     top edit interfaces
 
-    set ge-0/0/0 unit 0 description "Link to AS-Stat server"
+    set ge-0/0/0 unit 0 description "Link to AKVORADO server"
     set ge-0/0/0 unit 0 family inet address 192.168.30.3/24
     
     set ge-0/0/1 unit 0 description "Link to R1"
@@ -1054,7 +1067,7 @@ For more detail about netflow refer to [https://youtu.be/aqTpUmUibB8](https://yo
     ```
 
 
-- Test connectivity from R3 to the AS-Stats Server:
+- Test connectivity from R3 to the AKVORADO Server:
 
     ```
     ping 192.168.30.10 count 2
@@ -1066,19 +1079,19 @@ For more detail about netflow refer to [https://youtu.be/aqTpUmUibB8](https://yo
     ```
     configure
     # set system ntp server 192.168.30.254
-    set services flow-monitoring version9 template NETFLOWV9-ASSTAT option-refresh-rate seconds 25
-    set services flow-monitoring version9 template NETFLOWV9-ASSTAT template-refresh-rate seconds 15
-    set services flow-monitoring version9 template NETFLOWV9-ASSTAT ipv4-template
-    set forwarding-options sampling instance AS-STAT input rate 1 run-length 0
-    set forwarding-options sampling instance AS-STAT input max-packets-per-second 4096
-    set forwarding-options sampling instance AS-STAT family inet output flow-active-timeout 60
-    set forwarding-options sampling instance AS-STAT family inet output flow-server 192.168.30.10 port 9995
-    set forwarding-options sampling instance AS-STAT family inet output flow-server 192.168.30.10 autonomous-system-type origin
-    # set forwarding-options sampling instance AS-STAT family inet output flow-server 192.168.30.10 aggregation autonomous-system
-    set forwarding-options sampling instance AS-STAT family inet output flow-server 192.168.30.10 port 9995
-    set forwarding-options sampling instance AS-STAT family inet output flow-server 192.168.30.10 source-address 192.168.30.3
-    set forwarding-options sampling instance AS-STAT family inet output flow-server 192.168.30.10 version9 template NETFLOWV9-ASSTAT
-    set forwarding-options sampling instance AS-STAT family inet output inline-jflow source-address 192.168.30.3
+    set services flow-monitoring version9 template NETFLOWV9-AKVORADO option-refresh-rate seconds 25
+    set services flow-monitoring version9 template NETFLOWV9-AKVORADO template-refresh-rate seconds 15
+    set services flow-monitoring version9 template NETFLOWV9-AKVORADO ipv4-template
+    set forwarding-options sampling instance AKVORADO input rate 1 run-length 0
+    set forwarding-options sampling instance AKVORADO input max-packets-per-second 4096
+    set forwarding-options sampling instance AKVORADO family inet output flow-active-timeout 60
+    set forwarding-options sampling instance AKVORADO family inet output flow-server 192.168.30.10 port 2055
+    set forwarding-options sampling instance AKVORADO family inet output flow-server 192.168.30.10 autonomous-system-type origin
+    # set forwarding-options sampling instance AKVORADO family inet output flow-server 192.168.30.10 aggregation autonomous-system
+    set forwarding-options sampling instance AKVORADO family inet output flow-server 192.168.30.10 port 2055
+    set forwarding-options sampling instance AKVORADO family inet output flow-server 192.168.30.10 source-address 192.168.30.3
+    set forwarding-options sampling instance AKVORADO family inet output flow-server 192.168.30.10 version9 template NETFLOWV9-AKVORADO
+    set forwarding-options sampling instance AKVORADO family inet output inline-jflow source-address 192.168.30.3
     set interfaces ge-0/0/2 unit 0 family inet sampling input
     set interfaces ge-0/0/2 unit 0 family inet sampling output
     commit and-quit
@@ -1106,6 +1119,18 @@ For more detail about netflow refer to [https://youtu.be/aqTpUmUibB8](https://yo
     echo "" | sudo tee /etc/snmp/snmp.conf
     ```
 
+- Use snmpwalk command to test SNMP on R2. Retrieve the interface names from the R2 (Cisco) 192.168.30.2 with community string of <strong>training</strong>.
+
+    ```
+    snmpwalk -c training -v2c 192.168.30.2 1.3.6.1.2.1.31.1.1.1.1
+    ```
+
+    To return the ifDescr for all interfaces.
+
+    ```
+    snmpwalk -c training -v2c 192.168.30.3 IF-MIB::ifDescr
+    ```
+
 - Use snmpwalk command to test SNMP on R3. Retrieve the interface names from the R3 (Juniper) 192.168.30.3 with community string of <strong>training</strong>.
 
     ```
@@ -1119,17 +1144,17 @@ For more detail about netflow refer to [https://youtu.be/aqTpUmUibB8](https://yo
     ```
 
 
-- Start Wireshark to listen for traffic on port **9995**. Open a new terminal window by pressing **ctrl+alt+t**.
+- Start Wireshark to listen for traffic on port **2055**. Open a new terminal window by pressing **ctrl+alt+t**.
 
     ```
-    wireshark -i group30 -k -f "port 9995"
+    wireshark -i group30 -k -f "port 2055"
     ```
 
     Once some packets appear in the wireshark window, you can view the netflow data, by using the decode as feature. Refer to [https://youtu.be/DPKQBsL7nYk](https://youtu.be/DPKQBsL7nYk)
 
 - Right mouse click on a packet, and select **decode as**. 
 
-    ![](images/wireshark_view_netflow_01.png])
+    ![](images/wireshark_view_netflow_01.png)
 
     ![](images/wireshark_view_netflow_02.png)
 
