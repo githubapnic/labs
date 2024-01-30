@@ -1,3 +1,4 @@
+![](images/apnic_logo.png)
 ###**Install Akvorado**
 
 Akvorado is a software tool designed for collecting, enriching, and visualizing network flows. It functions by receiving network flows from routers using protocols like NetFlow v9, IPFIX, or sFlow. Once these flows are received, Akvorado enriches them with additional information such as GeoIP and interface names. These enriched flows are then exported to Apache Kafka, a distributed queue system, and subsequently stored in ClickHouse, a column-oriented database. Akvorado also features a web frontend that allows users to run queries and analyze the collected data.
@@ -1128,7 +1129,7 @@ For more detail about netflow refer to [https://youtu.be/aqTpUmUibB8](https://yo
     To return the ifDescr for all interfaces.
 
     ```
-    snmpwalk -c training -v2c 192.168.30.3 IF-MIB::ifDescr
+    snmpwalk -c training -v2c 192.168.30.2 IF-MIB::ifDescr
     ```
 
 - Use snmpwalk command to test SNMP on R3. Retrieve the interface names from the R3 (Juniper) 192.168.30.3 with community string of <strong>training</strong>.
