@@ -32,7 +32,7 @@
     geoip:
       asndatabase: /usr/share/GeoIP/GeoLite2-ASN.mmdb
       geodatabase: /usr/share/GeoIP/GeoLite2-Country.mmdb
-      optional: false
+      optional: true
     kafka:
       topic: flows
       brokers:
@@ -44,22 +44,22 @@
       compressioncodec: none
       queuesize: 32
     core:
+      override-sampling-rate: 10
       workers: 1
-      exporterclassifiers:
+      exporter-classifiers:
         - ClassifySiteRegex(Exporter.Name, "^([^-]+)-", "$1")
         - ClassifyRegion("Australia")
         - ClassifyTenant("APNIC")
         - ClassifyRole("training")
-      interfaceclassifiers:
-        - >
-          ClassifyConnectivityRegex(Interface.Description,
-          "^(?i)(ge|Gigabit):? ", "$1") &&
+      interface-classifiers:
+        - |
+          ClassifyConnectivityRegex(Interface.Description, "^(?i)(transit|pni|ppni|ix):? ", "$1") &&
           ClassifyProviderRegex(Interface.Description, "^\\S+?\\s(\\S+)", "$1") &&
           ClassifyExternal()
-        - ClassifyInternal()
+        - ClassifyConnectivityRegex(Interface.Description,"^(?i)(ge|Gigabit)? ", "$1") &&
+          ClassifyInternal()
       # classifiercachesize: 1000
-      defaultsamplingrate: {}
-      overridesamplingrate: 1024
+      default-sampling-rate: {}
       asnproviders:
         - flow
         - geoip
