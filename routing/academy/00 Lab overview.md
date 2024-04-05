@@ -6,7 +6,8 @@
 
 ##**About this Lab**
 
-> This Lab has been designed for you to configure BGP on Cisco Routers (with a number of Linux/Lubuntu hosts) and to advance your knowledge of BGP routing. 
+> This Lab has been designed for you to configure BGP on Cisco Routers (with a number of Linux/Lubuntu hosts) and to advance your knowledge of BGP routing.
+> Access the virtual lab here [https://academy.apnic.net/virtual-labs?labId=69078](https://academy.apnic.net/virtual-labs?labId=69078)
 
 
 ## **Introduction **
