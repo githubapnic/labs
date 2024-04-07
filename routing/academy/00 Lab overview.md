@@ -203,4 +203,4 @@ logging synchronous
 
 ![Layer 3 Addressing](images/topology_l3addr.png)
 
-!IMAGE[Addressing Plan](images/addressing_plan_cisco_20240304.png)
+![Addressing Plan](images/addressing_plan_cisco_20240304.png)
