@@ -1,0 +1,64 @@
+proc pingIPv4 {} {
+    # Execute the command and capture its output
+    set output [exec "show ip route | include L"]
+    # Display the command output for debugging
+    # puts "Output of 'show ip route | include L':"
+    # puts $output
+
+    # Initialize an empty list to store extracted IP addresses
+    set ipList {}
+    # Use regexp -all -inline to find all IP addresses and add them to the ipList
+    set matches [regexp -all -inline {([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)} $output]
+    
+    # Filter out only IP addresses from the matches
+    for {set i 1} {$i < [llength $matches]} {incr i 2} {
+        lappend ipList [lindex $matches $i]
+    }
+
+    # Check if matches found, and if so, print them
+    if {[llength $ipList] > 0} {
+        foreach ip $ipList {
+            # puts "Would Ping IPv4 Address: $ip"
+            ping $ip re 2
+        }
+    } else {
+        puts "No IP addresses were matched. Please check the regex pattern and command output."
+    }
+}
+
+proc pingIPv6 {} {
+    # Execute the command and capture its output
+    set output [exec "show ipv6 route | include L"]
+    # Display the command output for debugging
+    # puts "Output of 'show ipv6 route | include L':"
+    # puts $output
+
+    # Initialize an empty list to store extracted IPv6 addresses
+    set ipList {}
+    # Use regexp -all -inline to find all IPv6 addresses and add them to the ipList
+    # This regex pattern is a simplified version and might need adjustments to match specific IPv6 formats
+    set matches [regexp -all -inline {([0-9A-Fa-f:]+:+[0-9A-Fa-f:]+)} $output]
+    
+    # Filter out only IPv6 addresses from the matches
+    for {set i 1} {$i < [llength $matches]} {incr i 2} {
+        lappend ipList [lindex $matches $i]
+    }
+
+    # Check if matches found, and if so, ping them
+    if {[llength $ipList] > 0} {
+        foreach ip $ipList {
+            # Exclude multicast addresses starting with FF00::
+            if {![string match "FF00::*" $ip]} {
+                # puts "Would Ping IPv6 Address: $ip"
+                ping ipv6 $ip re 2
+            }
+        }
+    } else {
+        puts "No IPv6 addresses were matched. Please check the regex pattern and command output."
+    }
+}
+
+
+# Call the procedures
+pingIPv4
+pingIPv6
