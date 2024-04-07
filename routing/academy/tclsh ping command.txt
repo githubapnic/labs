@@ -1,0 +1,37 @@
+!# BGP Traffic engineering lab
+!# https://academy.apnic.net/virtual-labs?labId=146773
+!# R1
+
+tclsh
+foreach i {
+  10.1.0.2
+  10.1.0.6
+  10.1.0.10
+  172.20.0.1
+  10.2.1.2
+} {ping $i re 2}
+
+
+tclsh
+foreach i {
+  2001:db8:1::1
+  2001:db8:1:1::1
+  2001:db8:1:2::1
+  2406:6400:4::
+  2001:db8:2:1::2
+} {ping ipv6 $i re 2}
+
+!# ISP1
+tclsh
+foreach i {
+  172.20.0.2
+  172.20.0.6
+  172.18.1.2
+} {ping $i re 2}
+
+tclsh
+foreach i {
+  2406:6400:4::1
+  2406:6400:4:1::1
+  2406:6400:2:1::2
+} {ping ipv6 $i re 2}
