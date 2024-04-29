@@ -1,5 +1,5 @@
 # 14 Router Setup
-The lab files are workshop material provided by Dr. Philip Smith available at ![BGP4ALL](https://bgp4all.com/pfs/) under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0). Full terms at [https://creativecommons.org/licenses/by-nc-nd/4.0/](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+The lab files are workshop material provided by Dr. Philip Smith available at [BGP4ALL](https://bgp4all.com/pfs/) under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0). Full terms at [https://creativecommons.org/licenses/by-nc-nd/4.0/](https://creativecommons.org/licenses/by-nc-nd/4.0/).
 
 ## Objective
 Create a basic physical lab with IP addressing and essential router configuration. Ensure that all routers, interfaces, cables, and connections are working properly.
