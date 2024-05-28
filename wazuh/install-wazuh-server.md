@@ -1,9 +1,9 @@
-<span style="display:block;text-align:center">!IMAGE[apnic_logo.png](apnic_logo.png)</span>
+<span style="display:block;text-align:center">[apnic_logo.png](apnic_logo.png)</span>
 
   
 ###**Installing the Wazuh Software**
 
-In this step, we will install the Wazuh software which has three central components: the Wazuh server, the Wazuh indexer, and the Wazuh dashboard. Wazuh is a security platform that provides unified XDR and SIEM protection for endpoints and cloud workloads. Wazuh is free and open source, for more information refer to [https://documentation.wazuh.com/current/quickstart.html](https://documentation.wazuh.com/current/quickstart.html)
+In this step, we will install the Wazuh software which has three central components: the Wazuh server, the Wazuh indexer, and the Wazuh dashboard. Wazuh is a security platform that provides unified XDR and SIEM protection for endpoints and cloud workloads. 
 
 The steps to complete this section are:
 * Log into the virtual lab
@@ -11,6 +11,8 @@ The steps to complete this section are:
 * Update software
 * Install required software
 * Install Wazuh software
+
+Wazuh is free and open source, for more information refer to [https://documentation.wazuh.com/current/quickstart.html](https://documentation.wazuh.com/current/quickstart.html)
 
 - Log into the RPKI Lab (Sandbox) virtual lab on the APNIC Academy - [https://academy.apnic.net/virtual-labs?labId=146763](https://academy.apnic.net/virtual-labs?labId=146763)
 
