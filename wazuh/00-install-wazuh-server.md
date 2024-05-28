@@ -103,7 +103,7 @@ Wazuh is free and open source, for more information refer to [https://documentat
 
     ### Access the Wazuh Dashboard ###
 
-13. Use Firefox and browse to the Wazuh HTTP server `https://192.168.30.97`
+13. Use Firefox and browse to the Wazuh dashboard server `https://192.168.30.97`
 
     ```
     https://192.168.30.97
