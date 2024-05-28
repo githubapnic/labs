@@ -42,50 +42,62 @@ Wazuh is free and open source, for more information refer to [https://documentat
 
     **NOTE:** Make sure to remember the displayed admin password. Or continue to the next to step to reset the password.
 
-| Command  | Description |
-|--------------|-------------|
-| curl       | A command-line tool to transfer data from or to a server. |
-| -s        | makes the curl output silent. |
-| -O         | saves the file with the same name as in the URL. |
-| https://packages.wazuh.com/4.7/wazuh-install.sh | The URL from which the Wazuh installation script is downloaded. |
-| &&         | Logical AND operator to run the next command only if the previous one succeeds. |
-| sudo       | Executes the following command with superuser (root) privileges. |
-| bash       | The shell to interpret the script. |
-| ./wazuh-install.sh | The downloaded Wazuh installation script to be executed. |
-| -a         | Option to install all the components including the Wazuh manager, indexer and dashboard. |
-| -i         | Option to ignore hardware requirement checks. |
+    | Command  | Description |
+    |--------------|-------------|
+    | curl       | A command-line tool to transfer data from or to a server. |
+    | -s        | makes the curl output silent. |
+    | -O         | saves the file with the same name as in the URL. |
+    | https://packages.wazuh.com/4.7/wazuh-install.sh | The URL from which the Wazuh installation script is downloaded. |
+    | &&         | Logical AND operator to run the next command only if the previous one succeeds. |
+    | sudo       | Executes the following command with superuser (root) privileges. |
+    | bash       | The shell to interpret the script. |
+    | ./wazuh-install.sh | The downloaded Wazuh installation script to be executed. |
+    | -a         | Option to install all the components including the Wazuh manager, indexer and dashboard. |
+    | -i         | Option to ignore hardware requirement checks. |
 
 
     ### Reset the Admin password ###
 
-6. Navigate to Wazuh OpenSearch Security Tools Directory:
+6. Switch to Superuser (root).
+
+    ```
+    sudo su
+    ```
+
+7. Navigate to Wazuh OpenSearch Security Tools Directory:
 
     ```
     cd /usr/share/wazuh-indexer/plugins/opensearch-security/tools
     ```
 
-7. List Files in the Directory:
+8. List Files in the Directory:
 
     ```
     ls -lash
     ```
 
-8. Run Wazuh Password Tool to Set Admin Password:
+9. Run Wazuh Password Tool to Set Admin Password:
 
     ```
-    sudo bash ./wazuh-passwords-tool.sh -u admin -training
+    ./wazuh-passwords-tool.sh -u admin -p Training1+
     ```
-    Note: `training` will be the new password.
+    Note: `Training1+` will be the new password.
 
-9. Restart Wazuh Dashboard Service.
-
-    ```
-    systemctl restart wazuh-dashboard
-    ```
-
-10. Restart Filebeat Service.
+10. Switch to normal user (apnic).
 
     ```
-    systemctl restart filebeat
+    exit
+    ```
+
+11. Restart Wazuh Dashboard Service.
+
+    ```
+    sudo systemctl restart wazuh-dashboard
+    ```
+
+12. Restart Filebeat Service.
+
+    ```
+    sudo systemctl restart filebeat
     ```
 
