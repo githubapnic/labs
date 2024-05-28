@@ -42,34 +42,48 @@ Wazuh is free and open source, for more information refer to [https://documentat
 
     **NOTE:** Make sure to remember the displayed admin password. Or continue to the next to step to reset the password.
 
+| Command  | Description |
+|--------------|-------------|
+| `curl`       | A command-line tool to transfer data from or to a server. |
+| `-s`        | `-s` makes the curl output silent. |
+|`-O`          | saves the file with the same name as in the URL. |
+| `https://packages.wazuh.com/4.7/wazuh-install.sh` | The URL from which the Wazuh installation script is downloaded. |
+| `&&`         | Logical AND operator to run the next command only if the previous one succeeds. |
+| `sudo`       | Executes the following command with superuser (root) privileges. |
+| `bash`       | The shell to interpret the script. |
+| `./wazuh-install.sh` | The downloaded Wazuh installation script to be executed. |
+| `-a`         | Option to install the Wazuh manager and agent. |
+| `-i`         | Option to ignore hardware requirement checks. |
+
+
     ### Reset the Admin password ###
 
-5. Navigate to Wazuh OpenSearch Security Tools Directory:
+6. Navigate to Wazuh OpenSearch Security Tools Directory:
 
     ```
     cd /usr/share/wazuh-indexer/plugins/opensearch-security/tools
     ```
 
-6. List Files in the Directory:
+7. List Files in the Directory:
 
     ```
     ls -lash
     ```
 
-7. Run Wazuh Password Tool to Set Admin Password:
+8. Run Wazuh Password Tool to Set Admin Password:
 
     ```
     sudo bash ./wazuh-passwords-tool.sh -u admin -training
     ```
     Note: `training` will be the new password.
 
-8. Restart Wazuh Dashboard Service.
+9. Restart Wazuh Dashboard Service.
 
     ```
     systemctl restart wazuh-dashboard
     ```
 
-9. Restart Filebeat Service.
+10. Restart Filebeat Service.
 
     ```
     systemctl restart filebeat
