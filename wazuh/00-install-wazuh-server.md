@@ -52,7 +52,7 @@ Wazuh is free and open source, for more information refer to [https://documentat
 | sudo       | Executes the following command with superuser (root) privileges. |
 | bash       | The shell to interpret the script. |
 | ./wazuh-install.sh | The downloaded Wazuh installation script to be executed. |
-| -a         | Option to install the Wazuh manager and agent. |
+| -a         | Option to install all the components including the Wazuh manager, indexer and dashboard. |
 | -i         | Option to ignore hardware requirement checks. |
 
 
