@@ -101,3 +101,19 @@ Wazuh is free and open source, for more information refer to [https://documentat
     sudo systemctl restart filebeat
     ```
 
+    ### Access the Wazuh Dashboard ###
+
+13. Use Firefox and browse to the Wazuh HTTP server `https://192.168.30.97`
+
+    ```
+    https://192.168.30.97
+    ```
+
+15. Log in using the following credentials:
+
+    * User: `admin`<br>
+    * Password: `Training1+`
+   
+
+End of lab.
+
