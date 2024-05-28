@@ -108,9 +108,11 @@ The steps to complete this section are:
 
     Go to Wazuh -> Agents (from the menu) you can see details of the agent
 
-    >[!Knowledge] Dicsusson:
+    ### Dicsusson ###
+    <ul>
     <li>Research how Wazuh works, and describe the backend technology?
     <li>Create a list of advantages and disadvantages for Agentless vs Agent?
     <li>What other alternative software is there for Wazuh?    
+    </ul>
 
 Continue to the next lab [Vulnerability Management](05-vulnerability-management.md)
