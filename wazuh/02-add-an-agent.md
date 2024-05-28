@@ -96,15 +96,21 @@ The steps to complete this section are:
 
     >[!Hint] **Note**: alternatively, you can use run `netstat -nat | grep ESTABLISHED`
 
-11. Go to the Wazuh Dashboard, by returning to FireFox.
+11. Another way is to use the `Check agent` controls. Refer to the online help [https://documentation.wazuh.com/current/user-manual/reference/tools/agent-control.html](https://documentation.wazuh.com/current/user-manual/reference/tools/agent-control.html)
 
-12. Refresh the web page that is open in the Firefox browser. It should show 1 Active Agent.
+    ```
+    sudo /var/ossec/bin/agent_control -l
+    ```
+
+12. Go to the Wazuh Dashboard, by returning to FireFox.
+
+13. Refresh the web page that is open in the Firefox browser. It should show 1 Active Agent.
 
     UserName = `admin`
 
     Password = `Training1+`
 
-13. Explore the Wazuh Dashboard.
+14. Explore the Wazuh Dashboard.
 
     Go to Wazuh -> Agents (from the menu) you can see details of the agent
 
