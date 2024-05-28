@@ -98,7 +98,7 @@ The steps to complete this section are:
 
 11. Go to the Wazuh Dashboard, by returning to FireFox.
 
-12. Refresh the web page that is open in the Firefox browser. It shoudl show 1 Active Agent.
+12. Refresh the web page that is open in the Firefox browser. It should show 1 Active Agent.
 
     UserName = `admin`
 
