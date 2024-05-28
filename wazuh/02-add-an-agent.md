@@ -113,4 +113,4 @@ The steps to complete this section are:
     <li>Create a list of advantages and disadvantages for Agentless vs Agent?
     <li>What other alternative software is there for Wazuh?    
 
-COntinue to the next lab [Vulnerability Management](05-vulnerability-management.md)
+Continue to the next lab [Vulnerability Management](05-vulnerability-management.md)
