@@ -1,7 +1,7 @@
 ![](images/apnic_logo.png)
 
   
-## Installing the Wazuh Software##
+## Installing the Wazuh Software ##
 
 In this step, we will install the Wazuh software which has three central components: the Wazuh server, the Wazuh indexer, and the Wazuh dashboard. Wazuh is a security platform that provides unified XDR and SIEM protection for endpoints and cloud workloads. 
 
