@@ -24,7 +24,7 @@ The steps to complete this section are:
     * User: `admin`<br>
     * Password: `Training1+`
 
-3. Click on the `Add Agent` hyperlink on the main page, to open the wizard. Add the Wazuh yum repository. Or use the following link:
+3. Click on the `Add Agent` hyperlink on the main page, to open the wizard. Or use the following link:
 
     ```
     https://192.168.30.97/app/wazuh#/agents-preview/
