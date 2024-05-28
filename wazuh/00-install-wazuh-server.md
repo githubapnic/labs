@@ -29,7 +29,7 @@ Wazuh is free and open source, for more information refer to [https://documentat
 
 3. Update the software and install required software
     ```
-    sudo apt-get update && sudo apt-get -y apt-transport-https
+    sudo apt-get update && sudo apt-get install -y apt-transport-https
     ```
 
     Password = `training`
