@@ -1,5 +1,6 @@
 ![](images/apnic_logo.png)
-**Lab 1 - Setup Wazuh Manager**
+
+## Lab 1 - Setup Wazuh Manager ##
 
 The steps to complete this section are:
 * Log into Wazuh server
@@ -55,3 +56,5 @@ The steps to complete this section are:
     ```
     sudo lsof -Pi | grep LISTEN
     ```
+
+  Continue to the next lab [Add An Agent](02-add-an-agent.md)
