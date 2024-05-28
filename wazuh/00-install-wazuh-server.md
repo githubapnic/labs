@@ -115,5 +115,5 @@ Wazuh is free and open source, for more information refer to [https://documentat
     * Password: `Training1+`
    
 
-End of lab.
+Continue to the next lab [Setup Wazuh Manager](01-Setup-Wazuh-Manager.md)
 
